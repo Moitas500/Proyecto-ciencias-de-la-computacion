@@ -9,14 +9,16 @@
 
 using namespace std;
 
-void menu_principal();
+void menu_director();
 void menu_cursos();
 void menu_profesores();
 void menu_estudiantes();
+void menu_seleccion();
+void menu_profesor();
 int menu(const char *titulo, const char *opciones[], int n); 
 
 int main(int argc, char** argv) {
-	menu_principal();
+	menu_seleccion();
 	
 	return 0;
 }
@@ -32,7 +34,73 @@ void gotoxy(int x, int y)
 	SetConsoleCursorPosition(hCon, dwPos);
 }
 
-void menu_principal(){
+void menu_seleccion(){
+	bool repite = true;
+	int opcion;
+	//Titulo del menu
+	const char *titulo = "MENU PRINCIPAL";
+	//Opciones del menu
+	const char *opciones[] = {"Ingresar director de area","Ingresar como profesor","Salir"};
+	//Numero de opciones
+	int n = 3;
+	
+	do{
+		opcion = menu(titulo, opciones, n);
+		
+		//Alternativas
+		switch(opcion){
+			case 1:
+				menu_director();
+				break;
+				
+			case 2:
+				menu_profesor();
+				break;
+				
+			case 3:
+				repite = false;
+				break;	
+		}
+		
+	}while(repite);
+}
+
+void menu_profesor(){
+	bool repite = true;
+	int opcion;
+	//Titulo del menu
+	const char *titulo = "MENU PRINCIPAL";
+	//Opciones del menu
+	const char *opciones[] = {"Consultar cursos","Esquema de notas","Consultar estudiantes","Salir"};
+	//Numero de opciones
+	int n = 4;
+	
+	do{
+		opcion = menu(titulo, opciones, n);
+		
+		//Alternativas
+		switch(opcion){
+			case 1:
+				menu_cursos();
+				break;
+				
+			case 2:
+				menu_profesores();
+				break;
+				
+			case 3:
+				menu_estudiantes();
+				break;
+				
+			case 4:
+				repite = false;
+				break; 		
+		}
+		
+	}while(repite);
+}
+
+void menu_director(){
 	bool repite = true;
 	int opcion;
 	//Titulo del menu
@@ -73,7 +141,7 @@ void menu_cursos(){
 	//Titulo del menu
 	const char *titulo = "MENU CURSOS";
 	//Opciones del menu
-	const char *opciones[] = {"Lista de cursos","Salir"};
+	const char *opciones[] = {"Buscar curso","Salir"};
 	//Numero de opciones
 	int n = 2;
 	
@@ -101,9 +169,9 @@ void menu_profesores(){
 	//Titulo del menu
 	const char *titulo = "MENU PROFESORES";
 	//Opciones del menu
-	const char *opciones[] = {"Lista de profesores","Salir"};
+	const char *opciones[] = {"Buscar profesor","Lista de profesores segun cantidad de clases","Salir"};
 	//Numero de opciones
-	int n = 2;
+	int n = 3;
 	
 	do{
 		opcion = menu(titulo, opciones, n);
@@ -128,7 +196,7 @@ void menu_estudiantes(){
 	//Titulo del menu
 	const char *titulo = "MENU ESTUDIANTES";
 	//Opciones del menu
-	const char *opciones[] = {"Lista de estudiantes","Salir"};
+	const char *opciones[] = {"Buscar estudiante","Salir"};
 	//Numero de opciones
 	int n = 2;
 	
