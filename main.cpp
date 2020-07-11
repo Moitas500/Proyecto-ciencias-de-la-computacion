@@ -2,21 +2,35 @@
 #include<conio.h>
 #include<iostream>
 #include<windows.h>
+#include <fstream>
+
+#include "Director.h"
 
 #define TECLA_ARRIBA 72
 #define TECLA_ABAJO 80
 #define ENTER 13
 
 using namespace std;
-
+//Menu al entrar como director
 void menu_director();
+//Menu al entrar al area de cursos
 void menu_cursos();
+//Menu para ver a los profesores
 void menu_profesores();
+//Menu al elegir la opcion estudiantes
 void menu_estudiantes();
+//Menu inicial
 void menu_seleccion();
+//Menu al entrar como profesor
 void menu_profesor();
+//Menu para registrar
+Director menu_registrar();
+//Modelo general del menu para evitar repetir codigo
 int menu(const char *titulo, const char *opciones[], int n); 
+//Menu para loguearse
+bool menu_log(string _usuario, string _contrasena);
 
+//Funcion principal
 int main(int argc, char** argv) {
 	menu_seleccion();
 	
@@ -49,9 +63,38 @@ void menu_seleccion(){
 		
 		//Alternativas
 		switch(opcion){
-			case 1:
-				menu_director();
+			case 1:{
+				ifstream archivo;
+				archivo.open("director/datos.txt");
+				if(archivo.fail()){
+					archivo.close();
+					ofstream crear;
+					crear.open("director/datos.txt");
+					Director dir = menu_registrar();
+					crear << dir.getNombre() << endl;
+					crear << dir.getContrasena() << endl;
+					crear << dir.getUsuario() << endl;
+					crear << dir.getCargo();
+					crear.close();
+				}else{
+					string nombre, usuario, contrasena;
+					
+					archivo >> nombre;
+					archivo >> contrasena;
+					archivo >> usuario;
+					
+					Director dir(nombre, contrasena, usuario, "Director");
+					
+					if(menu_log(dir.getUsuario(),dir.getContrasena())){
+						menu_director();
+					}else{
+						system("cls");
+					}
+				}
+				
+				archivo.close();
 				break;
+			}
 				
 			case 2:
 				menu_profesor();
@@ -65,11 +108,41 @@ void menu_seleccion(){
 	}while(repite);
 }
 
+bool menu_log(string _usuario, string _contrasena){
+	string usuario, contrasena;
+	system("cls");
+	cout << "\t\t\t LOGIN" << endl;
+	cout << "\n\t Usuario: ";
+	getline(cin,usuario);
+	cout << "\n\t Contraseña: ";
+	getline(cin,contrasena);
+	
+	if(usuario == _usuario && contrasena == _contrasena){
+		return true;
+	}
+	
+	return false;
+}
+
+Director menu_registrar(){
+	string nombre, usuario, contrasena;
+	system("cls");
+	cout << "\t\t\t REGISTRO" << endl;
+	cout << "\n\t Nombre: ";
+	getline(cin, nombre);
+	cout << "\n\t Usuario: ";
+	getline(cin, usuario);
+	cout << "\n\t Contraseña: ";
+	getline(cin, contrasena);
+	Director dir(nombre,contrasena,usuario,"Director");
+	return dir;
+}
+
 void menu_profesor(){
 	bool repite = true;
 	int opcion;
 	//Titulo del menu
-	const char *titulo = "MENU PRINCIPAL";
+	const char *titulo = "MENU PROFESOR";
 	//Opciones del menu
 	const char *opciones[] = {"Consultar cursos","Esquema de notas","Consultar estudiantes","Salir"};
 	//Numero de opciones
@@ -104,7 +177,7 @@ void menu_director(){
 	bool repite = true;
 	int opcion;
 	//Titulo del menu
-	const char *titulo = "MENU PRINCIPAL";
+	const char *titulo = "MENU DIRECTOR";
 	//Opciones del menu
 	const char *opciones[] = {"Consultar cursos","Consultar profesores","Consultar estudiantes","Salir"};
 	//Numero de opciones
@@ -184,7 +257,11 @@ void menu_profesores(){
 				
 			case 2:
 				repite = false;
-				break; 	 		
+				break;
+			
+			case 3:
+				repite = false;
+				break;	 	 		
 		}
 		
 	}while(repite);
