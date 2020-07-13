@@ -5,6 +5,7 @@
 #include <fstream>
 
 #include "Director.h"
+#include "Profesor.h"
 
 #define TECLA_ARRIBA 72
 #define TECLA_ABAJO 80
@@ -23,8 +24,10 @@ void menu_estudiantes();
 void menu_seleccion();
 //Menu al entrar como profesor
 void menu_profesor();
-//Menu para registrar
+//Menu para registrar como director
 Director menu_registrar();
+//Registrar profesor
+Profesor menu_registrarProfesor();
 //Modelo general del menu para evitar repetir codigo
 int menu(const char *titulo, const char *opciones[], int n); 
 //Menu para loguearse
@@ -124,9 +127,36 @@ bool menu_log(string _usuario, string _contrasena){
 	return false;
 }
 
+Profesor menu_registrarProfesor(){
+	string nombre, usuario, contrasena, apellido;
+	int cedula, numClases;
+	
+	system("cls");
+	
+	cout << "\t\t\t REGISTRAR PROFESOR" << endl;
+	cout << "\n\t Nombre: ";
+	getline(cin,nombre);
+	cout << "\n\t Apellido: ";
+	getline(cin,apellido);
+	cout << "\n\t Usuario: ";
+	getline(cin,usuario);
+	cout << "\n\t Contraseña: ";
+	getline(cin,contrasena);
+	cout << "n\t Cedula: ";
+	cin >> cedula;
+	cout << "\n\t Numero de clases: ";
+	cin >> numClases;
+	
+	Profesor profe(nombre,contrasena,usuario,cedula,apellido,numClases);
+	
+	return profe;
+}
+
 Director menu_registrar(){
 	string nombre, usuario, contrasena;
+	
 	system("cls");
+	
 	cout << "\t\t\t REGISTRO" << endl;
 	cout << "\n\t Nombre: ";
 	getline(cin, nombre);
@@ -134,7 +164,9 @@ Director menu_registrar(){
 	getline(cin, usuario);
 	cout << "\n\t Contraseña: ";
 	getline(cin, contrasena);
+	
 	Director dir(nombre,contrasena,usuario,"Director");
+	
 	return dir;
 }
 
@@ -242,9 +274,9 @@ void menu_profesores(){
 	//Titulo del menu
 	const char *titulo = "MENU PROFESORES";
 	//Opciones del menu
-	const char *opciones[] = {"Buscar profesor","Lista de profesores segun cantidad de clases","Salir"};
+	const char *opciones[] = {"Buscar profesor","Lista de profesores segun cantidad de clases","Añadir profesor","Salir"};
 	//Numero de opciones
-	int n = 3;
+	int n = 4;
 	
 	do{
 		opcion = menu(titulo, opciones, n);
@@ -256,10 +288,14 @@ void menu_profesores(){
 				break;
 				
 			case 2:
-				repite = false;
+				cout << "hola";
 				break;
 			
 			case 3:
+				menu_registrarProfesor();
+				break;
+			
+			case 4:
 				repite = false;
 				break;	 	 		
 		}
