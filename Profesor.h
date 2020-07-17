@@ -7,6 +7,15 @@
 
 using namespace std;
 
+struct maestro{
+	string nombre;
+	string contrasena;
+	string usuario;
+	string apellidos;
+	int cedula;
+	int numClases;
+};
+
 class Profesor : public Persona{
 	//Atributos
 	private:
