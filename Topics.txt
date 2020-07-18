@@ -6,3 +6,5 @@ Sistemas Operativos
 Probabilidad y Estadistica
 3
 Redes
+4
+Especiales
