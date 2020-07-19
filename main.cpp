@@ -10,6 +10,7 @@
 #include "Profesor.h"
 #include "lista.h"
 #include "Archivos.h"
+#include "estructura.h"
 
 #define TECLA_ARRIBA 72
 #define TECLA_ABAJO 80
@@ -32,16 +33,6 @@ void menu_profesor();
 Director menu_registrar();
 //Registrar profesor
 Profesor menu_registrarProfesor();
-//Metodo para crear archivos
-bool crearArchivo(string ruta);
-//Metodo para leer archivos de director
-Director leerArchivoDirector(string ruta);
-//Metodo para Leer archivos de profesor 
-lista<maestro> leerArchivoProfesor(string ruta);
-//Eliminar archivos en la ruta seleccionada
-bool eliminarArchivo(string ruta);
-//Metodo para escribir archivos
-void escribirArchivo(string ruta,string texto);
 //Metodo para saber si el archivo existe en la ruta seleccionada
 bool existeArchivo(string ruta);
 //Menu para imprimir la lista de profesores
@@ -279,7 +270,7 @@ void menu_cursos(){
 	}while(repite);
 }
 
-void buscarProfesor(int cedula, lista<maestro> profes){
+void buscarProfesor(int cedula, lista<maestro> profes){		//Preguntarle a camilo para que sirve esta función
 	maestro real;
 	maestro buscado;
 	bool encontrado;
@@ -333,14 +324,14 @@ void menu_profesores(){
 			
 			case 1:{
 				int cedula = menuBuscarProfesor();
-				lista<maestro> profes = file.leerArchivoProfesor("Profesores/listaProfesores.txt");
+				listaD<maestro> profes = file.leerArchivoProfesor("Profesores/listaProfesores.txt");
 				
 				buscarProfesor(cedula, profes);
 				break;
 			}		
 				
 			case 2:{
-				lista<maestro> profes = file.leerArchivoProfesor("Profesores/listaProfesores.txt");
+				listaD<maestro> profes = file.leerArchivoProfesor("Profesores/listaProfesores.txt");
 				int opcion;
 				
 				do{
@@ -420,8 +411,8 @@ void menu_estudiantes(){
 	}while(repite);
 }
 
-int menuLista(lista<maestro> profes){
-	maestro mast;
+int menuLista(listaD<maestro> profes){		//Preguntarle a camilo para que sirve esta tambien
+	duo<maestro> mast;
 	int opcionSeleccionada = 2;
 	int tecla;
 	bool repite = true;	
@@ -434,10 +425,10 @@ int menuLista(lista<maestro> profes){
 					
 		int i = 0;
 
-		for((i=1);(i<profes.get_tam());(i++))
+		for((i=1);(i<profes.getTam());(i++))
 	    {
-	    	profes.buscar(i,&mast); 
-	    	gotoxy(10, 4 + i); cout << i << ") " << "Cedula: " << mast.cedula << " Nombre: " << mast.apellidos << " " << mast.nombre << " Numero de clases: " << mast.numClases;
+	    	profes.obtener(*mast); 
+	    	gotoxy(10, 4 + i); cout << i << ") " << "Cedula: " << mast.dato.cedula << " Nombre: " << mast.dato.apellidos << " " << mast.dato.nombre << " Numero de clases: " << mast.dato.numClases;
 		}
 					
 		gotoxy(10,4+i);
@@ -455,14 +446,14 @@ int menuLista(lista<maestro> profes){
 				
 				if (opcionSeleccionada < 2)
 				{
-					opcionSeleccionada = profes.get_tam() + 1;
+					opcionSeleccionada = profes.getTam() + 1;
 				}
 				break;
 			
 			case TECLA_ABAJO:
 				opcionSeleccionada ++;
 				
-				if (opcionSeleccionada > profes.get_tam() + 1)
+				if (opcionSeleccionada > profes.getTam() + 1)
 				{
 					opcionSeleccionada = 2;
 				}

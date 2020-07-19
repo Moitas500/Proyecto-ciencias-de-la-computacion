@@ -24,6 +24,7 @@ class listaD{
 	void cambiar(int clave, T dato);
 	void obtenerTodos();	
 	void obtener(int clave);
+	bool isIn(int clave);
 	bool obtener(duo<T> &estructura);		//Usar solo al momento de guardar el archivo;
 	int getTam();	
 };
@@ -130,6 +131,19 @@ bool listaD<T>::obtener(duo<T> &estructura){
 		return false;
 	}
 	
+}
+
+template<class T>
+bool listaD<T>::isIN(int clave){
+		duo<T> *aux= inicio->sig;
+	while(clave>aux->clave){
+		aux=aux->sig;
+	}
+	if( aux->clave==clave){
+		return true;
+	} else {
+		return false;
+	}
 }
 template <class T>
 int listaD<T>::getTam(){

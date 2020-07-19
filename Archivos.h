@@ -19,7 +19,7 @@ class Archivo{
 				}	
 		void leerTemas(listaD<string> &lista);
 		void escribirTemas(listaD<string> lista);
-		lista<maestro>  leerArchivoProfesor(string ruta);
+		listaD<maestro>  leerArchivoProfesor(string ruta);
 		Director leerArchivoDirector(string ruta);
 		bool crearArchivo(string ruta);
 		bool eliminarArchivo(string ruta);
@@ -57,11 +57,11 @@ void Archivo::escribirTemas(listaD<string> lista){
 	}
 	archivoS.close();
 }
-lista<maestro> Archivo::leerArchivoProfesor(string ruta){
+listaD<maestro> Archivo::leerArchivoProfesor(string ruta){
 	string nombre, usuario, contrasena, apellidos, cedula, numClases;
 	int i = 1;
 	ifstream archivo(ruta.c_str());
-	lista<maestro> profes;
+	listaB<maestro> profes;
 	
 	while(!archivo.eof()){
 		archivo >> nombre;
@@ -79,7 +79,7 @@ lista<maestro> Archivo::leerArchivoProfesor(string ruta){
 		maest.numClases = atoi(numClases.c_str());
 		maest.usuario = usuario;
 		
-		profes.insertar(maest,i);
+		profes.insertar(maest.cedula,maest);
 		
 		i++;
 	}
