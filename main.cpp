@@ -9,6 +9,7 @@
 #include "Director.h"
 #include "Profesor.h"
 #include "lista.h"
+#include "Archivos.h"
 
 #define TECLA_ARRIBA 72
 #define TECLA_ABAJO 80
@@ -74,91 +75,8 @@ void gotoxy(int x, int y)
 	SetConsoleCursorPosition(hCon, dwPos);
 }
 
-bool crearArchivo(string ruta){
-	ifstream archivo;
-	archivo.open(ruta.c_str());
-	if(archivo.fail()){
-		archivo.close();
-		ofstream crear;
-		crear.open(ruta.c_str());
-		crear.close();
-		return true;
-	}else{
-		return false;
-	}
-	return false;
-}
-
-bool eliminarArchivo(string ruta){
-	if(remove(ruta.c_str())){
-		return true;
-	}
-	return false;
-}
-
-void escribirArchivo(string ruta, string texto){
-	ofstream archivo;
-	archivo.open(ruta.c_str(),ios::app);	
-	
-	if(archivo.fail()){
-		system("cls");
-		cout << "No se pudo abrir el archivo" << endl;
-		system("pause");
-	}else{
-		archivo << texto + " ";
-		archivo.close();
-	}
-}
-
-lista<maestro> leerArchivoProfesor(string ruta){
-	string nombre, usuario, contrasena, apellidos, cedula, numClases;
-	int i = 1;
-	ifstream archivo(ruta.c_str());
-	lista<maestro> profes;
-	
-	while(!archivo.eof()){
-		archivo >> nombre;
-		archivo >> apellidos;
-		archivo >> contrasena;
-		archivo >> cedula;
-		archivo >> numClases;
-		archivo >> usuario;
-		
-		maestro maest;
-		maest.apellidos = apellidos;
-		maest.cedula = atoi(cedula.c_str());
-		maest.contrasena = contrasena;
-		maest.nombre = nombre;
-		maest.numClases = atoi(numClases.c_str());
-		maest.usuario = usuario;
-		
-		profes.insertar(maest,i);
-		
-		i++;
-	}
-	
-	archivo.close();
-	
-	return profes;
-}
-
-Director leerArchivoDirector(string ruta){
-	string nombre, usuario, contrasena, cargo;
-	ifstream archivo(ruta.c_str());
-	
-	archivo >> nombre;
-	archivo >> contrasena;
-	archivo >> usuario;
-	archivo >> cargo;
-	
-	Director dir(nombre, contrasena, usuario, cargo);
-	
-	archivo.close();
-	
-	return dir;
-}
-
 void menu_seleccion(){
+	Archivo file;
 	bool repite = true;
 	int opcion;
 	//Titulo del menu
@@ -174,14 +92,15 @@ void menu_seleccion(){
 		//Alternativas
 		switch(opcion){
 			case 1:{		
-				if(crearArchivo("director/datos.txt")){
+				if(file.crearArchivo("director/datos.txt")){
 					Director dir = menu_registrar();
-					escribirArchivo("director/datos.txt",dir.getNombre());
-					escribirArchivo("director/datos.txt",dir.getContrasena());
-					escribirArchivo("director/datos.txt",dir.getUsuario());
-					escribirArchivo("director/datos.txt",dir.getCargo());
+					file.escribirArchivo("director/datos.txt",dir.getNombre());
+					file.escribirArchivo("director/datos.txt",dir.getContrasena());
+					file.escribirArchivo("director/datos.txt",dir.getUsuario());
+					file.escribirArchivo("director/datos.txt",dir.getCargo());
 				}else{
-					Director dir = leerArchivoDirector("director/datos.txt");
+					
+					Director dir = file.leerArchivoDirector("director/datos.txt");
 					
 					if(menu_log(dir.getUsuario(),dir.getContrasena())){
 						menu_director();
@@ -396,6 +315,7 @@ int menuBuscarProfesor(){
 }
 
 void menu_profesores(){
+	Archivo file;
 	bool repite = true;
 	int opcion;
 	//Titulo del menu
@@ -413,14 +333,14 @@ void menu_profesores(){
 			
 			case 1:{
 				int cedula = menuBuscarProfesor();
-				lista<maestro> profes = leerArchivoProfesor("Profesores/listaProfesores.txt");
+				lista<maestro> profes = file.leerArchivoProfesor("Profesores/listaProfesores.txt");
 				
 				buscarProfesor(cedula, profes);
 				break;
 			}		
 				
 			case 2:{
-				lista<maestro> profes = leerArchivoProfesor("Profesores/listaProfesores.txt");
+				lista<maestro> profes = file.leerArchivoProfesor("Profesores/listaProfesores.txt");
 				int opcion;
 				
 				do{
@@ -436,7 +356,7 @@ void menu_profesores(){
 			}
 			
 			case 3:
-				if(crearArchivo("Profesores/listaProfesores.txt")){
+				if(file.crearArchivo("Profesores/listaProfesores.txt")){
 					Profesor profe = menu_registrarProfesor();
 					
 					anadirProfesorArchivo(profe);
@@ -457,6 +377,7 @@ void menu_profesores(){
 }
 
 void anadirProfesorArchivo(Profesor profe){
+	Archivo file;
 	stringstream ss;
 	stringstream sa;
 	ss << profe.getCedula() << endl;		
@@ -464,12 +385,12 @@ void anadirProfesorArchivo(Profesor profe){
 	sa << profe.getNumClases() << endl;
 	string numClases = sa.str();
 					
-	escribirArchivo("Profesores/listaProfesores.txt",profe.getNombre());
-	escribirArchivo("Profesores/listaProfesores.txt",profe.getApellidos());
-	escribirArchivo("Profesores/listaProfesores.txt",profe.getContrasena());			
-	escribirArchivo("Profesores/listaProfesores.txt",cedula);
-	escribirArchivo("Profesores/listaProfesores.txt",numClases);
-	escribirArchivo("Profesores/listaProfesores.txt",profe.getUsuario());
+	file.escribirArchivo("Profesores/listaProfesores.txt",profe.getNombre());
+	file.escribirArchivo("Profesores/listaProfesores.txt",profe.getApellidos());
+	file.escribirArchivo("Profesores/listaProfesores.txt",profe.getContrasena());			
+	file.escribirArchivo("Profesores/listaProfesores.txt",cedula);
+	file.escribirArchivo("Profesores/listaProfesores.txt",numClases);
+	file.escribirArchivo("Profesores/listaProfesores.txt",profe.getUsuario());
 }
 
 void menu_estudiantes(){
