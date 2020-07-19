@@ -23,9 +23,10 @@ class listaD{
 	void borrar(int clave);
 	void cambiar(int clave, T dato);
 	void obtenerTodos();	
-	void obtener(int clave);
-	bool isIn(int clave);
+	duo<T> obtener(int clave);
+	bool isIN(int clave);
 	bool obtener(duo<T> &estructura);		//Usar solo al momento de guardar el archivo;
+	void reiniciarPuntero();
 	int getTam();	
 };
 
@@ -108,15 +109,17 @@ void listaD<T>::obtenerTodos(){
 }
 
 template<class T>
-void listaD<T>::obtener(int clave){
+duo<T> listaD<T>::obtener(int clave){
 	duo<T> *aux= inicio->sig;
 	while(clave>aux->clave){
 		aux=aux->sig;
 	}
 	if( aux->clave==clave){
-		cout<<aux->clave<<"   "<<aux->dato<<endl;
+		return *aux;
 	} else {
 		cout<<"No se encontró la clave"<<endl;
+		aux=NULL;
+		return *aux;
 	}
 }
 
@@ -148,5 +151,9 @@ bool listaD<T>::isIN(int clave){
 template <class T>
 int listaD<T>::getTam(){
 	return tam;
+}
+template <class T>
+void listaD<T>:: reiniciarPuntero(){
+	puntero=inicio;
 }
 #endif

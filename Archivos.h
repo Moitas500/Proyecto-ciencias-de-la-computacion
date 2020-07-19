@@ -61,7 +61,7 @@ listaD<maestro> Archivo::leerArchivoProfesor(string ruta){
 	string nombre, usuario, contrasena, apellidos, cedula, numClases;
 	int i = 1;
 	ifstream archivo(ruta.c_str());
-	listaB<maestro> profes;
+	listaD<maestro> profes;
 	
 	while(!archivo.eof()){
 		archivo >> nombre;

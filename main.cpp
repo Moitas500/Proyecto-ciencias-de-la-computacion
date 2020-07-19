@@ -8,7 +8,6 @@
 
 #include "Director.h"
 #include "Profesor.h"
-#include "lista.h"
 #include "Archivos.h"
 #include "estructura.h"
 
@@ -36,7 +35,7 @@ Profesor menu_registrarProfesor();
 //Metodo para saber si el archivo existe en la ruta seleccionada
 bool existeArchivo(string ruta);
 //Menu para imprimir la lista de profesores
-int menuLista(lista<maestro> profes);
+int menuLista(listaD<maestro> profes);
 //Modelo general del menu para evitar repetir codigo
 int menu(const char *titulo, const char *opciones[], int n); 
 //Menu para loguearse
@@ -46,7 +45,7 @@ void anadirProfesorArchivo(Profesor profe);
 //Metodo que pide los datos de el profesor
 int menuBuscarProfesor();
 //Metodo que busca a un profesor segun la cedula
-void buscarProfesor(int cedula, lista<maestro> profes);
+void buscarProfesor(int cedula, listaD<maestro> profes);
 
 //Funcion principal
 int main(int argc, char** argv) {
@@ -270,26 +269,13 @@ void menu_cursos(){
 	}while(repite);
 }
 
-void buscarProfesor(int cedula, lista<maestro> profes){		//Preguntarle a camilo para que sirve esta función
-	maestro real;
-	maestro buscado;
-	bool encontrado;
-	int i = 0;
-
-	for((i=1);(i<profes.get_tam());(i++))
-	{
-	    profes.buscar(i,&real); 
-	    if(real.cedula == cedula){
-	    	buscado = real;
-	    	encontrado = true;
-		}
-	}
+void buscarProfesor(int cedula, listaD<maestro> profes){		//Preguntarle a camilo para que sirve esta función
 	
-	if(encontrado){	
-		lista<maestro> mast;
-		mast.insertar_inicio(real);
-		mast.insertar_inicio(buscado);
-		menuLista(mast);
+	if(profes.isIN(cedula)){
+		listaD<maestro> maestros;
+		maestros.insertar(profes.obtener(cedula).clave,profes.obtener(cedula).dato);
+		maestros.insertar(profes.obtener(cedula).clave,profes.obtener(cedula).dato);
+		menuLista(maestros);
 	}
 	
 }
@@ -337,7 +323,7 @@ void menu_profesores(){
 				do{
 					opcion = menuLista(profes);
 					
-					if(opcion == profes.get_tam()+1){
+					if(opcion == profes.getTam()+1){
 						repite = false;
 					}
 					
@@ -427,10 +413,10 @@ int menuLista(listaD<maestro> profes){		//Preguntarle a camilo para que sirve es
 
 		for((i=1);(i<profes.getTam());(i++))
 	    {
-	    	profes.obtener(*mast); 
+	    	profes.obtener(mast); 
 	    	gotoxy(10, 4 + i); cout << i << ") " << "Cedula: " << mast.dato.cedula << " Nombre: " << mast.dato.apellidos << " " << mast.dato.nombre << " Numero de clases: " << mast.dato.numClases;
 		}
-					
+		profes.reiniciarPuntero();			
 		gotoxy(10,4+i);
 		cout << i << ") " << "Salir";
 					
