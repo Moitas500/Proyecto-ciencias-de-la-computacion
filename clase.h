@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include "listaD.h"
+#include "Profesor.h"
 
 struct notas {string codigo;
              listaD<string> *archivos;
@@ -12,7 +13,7 @@ struct clasesArray {int cedula;
 			 };
 
 class clase{
-	
+	listaD<maestro> profes;
 	clasesArray *arregloClases[3]; //¿Puede ser un doble aputador?
 	public: clase(){
 		//pruebas
