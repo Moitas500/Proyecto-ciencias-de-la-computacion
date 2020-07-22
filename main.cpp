@@ -5,6 +5,7 @@
 #include <fstream>
 
 #include "Director.h"
+#include "clase.h"
 
 #define TECLA_ARRIBA 72
 #define TECLA_ABAJO 80
@@ -32,7 +33,9 @@ bool menu_log(string _usuario, string _contrasena);
 
 //Funcion principal
 int main(int argc, char** argv) {
-	menu_seleccion();
+	clase *prueba = new clase();
+	prueba->imprimir();
+	//menu_seleccion();
 	
 	return 0;
 }

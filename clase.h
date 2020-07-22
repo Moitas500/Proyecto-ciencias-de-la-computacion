@@ -2,10 +2,10 @@
 #define CLASE_H   
 #include <iostream>
 #include <stdlib.h>
-#include "Lista.h"
+#include "listaD.h"
 
 struct notas {string codigo;
-             lista<string> *archivos;
+             listaD<string> *archivos;
 			 };
 struct clasesArray {int cedula;
              notas *clases[];
@@ -17,7 +17,7 @@ class clase{
 	public: clase(){
 		//pruebas
 		// se crea una lista de archivos que ha subido el profesor
-		lista<string> *archivos= new lista<string>;
+		listaD<string> *archivos= new listaD<string>;
 		archivos->insertar(1,"notassegundoCorte.txt"); //se insertan algunos datos de prueba
 		archivos->insertar(0,"notasprimerCorte.txt");
 		//se crea una estructura la cual es un un codigo y la lista de archivos
@@ -41,7 +41,7 @@ class clase{
 
 void clase::imprimir(){
 	//funcion de prueba pero se puede cambiar para que imprima los archivos de cada profesor segun su cedula y codigo de clase (tambien se puede pensar en usar sobrecarga)
-	arregloClases[0]->clases[0]->archivos->recorrer();
+	arregloClases[0]->clases[0]->archivos->obtenerTodos();
 }
 void clase::anadirClase(int cedula){
  //pensar en usar algoritmos de busqueda en arreglos	
