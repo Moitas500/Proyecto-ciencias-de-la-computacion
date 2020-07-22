@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include "listaD.h"
+#include "Archivos.h"
 #include "Profesor.h"
 
 struct notas {string codigo;
@@ -14,8 +15,12 @@ struct clasesArray {int cedula;
 
 class clase{
 	listaD<maestro> profes;
-	clasesArray *arregloClases[3]; //¿Puede ser un doble aputador?
+	clasesArray *arregloClases[]; //¿Puede ser un doble aputador?
 	public: clase(){
+		Archivo *file = new Archivo();
+		profes= file->leerArchivoProfesor("Profesores/listaProfesores.txt");
+		arregloClases[profes.getTam()]= new clasesArray();
+		cout<<profes.getTam()<<endl;
 		//pruebas
 		// se crea una lista de archivos que ha subido el profesor
 		listaD<string> *archivos= new listaD<string>;
