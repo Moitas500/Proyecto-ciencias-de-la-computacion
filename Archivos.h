@@ -8,6 +8,7 @@
 #include "listaD.h"
 #include "Director.h"
 #include "Profesor.h"
+#include "pila.h"
 
 using namespace std;
 
@@ -15,15 +16,19 @@ class Archivo{
 		ifstream archivo;
 		ofstream archivoS;
 		string linea;
+		int pilaTam;
 		public:Archivo(){
+			pilaTam=0;
 				}	
 		void leerTemas(listaD<string> &lista);
 		void escribirTemas(listaD<string> lista);
 		listaD<maestro>  leerArchivoProfesor(string ruta);
+		pila<maestro>  *obtenerPilaProfesores(string ruta);
 		Director leerArchivoDirector(string ruta);
 		bool crearArchivo(string ruta);
 		bool eliminarArchivo(string ruta);
 		void escribirArchivo(string ruta, string texto);
+		int getPilaTam();
 
 };
 
@@ -83,7 +88,38 @@ listaD<maestro> Archivo::leerArchivoProfesor(string ruta){
 		
 		i++;
 	}
+	pilaTam=i;
+	archivo.close();
 	
+	return profes;
+}
+
+pila<maestro> *Archivo::obtenerPilaProfesores(string ruta){
+	string nombre, usuario, contrasena, apellidos, cedula, numClases;
+	int i = 1;
+	ifstream archivo(ruta.c_str());
+		maestro maest;
+	pila<maestro> *profes = new pila<maestro>(maest);
+	while(!archivo.eof()){
+		archivo >> nombre;
+		archivo >> apellidos;
+		archivo >> contrasena;
+		archivo >> cedula;
+		archivo >> numClases;
+		archivo >> usuario;
+		maestro maest;
+		maest.apellidos = apellidos;
+		maest.cedula = atoi(cedula.c_str());
+		maest.contrasena = contrasena;
+		maest.nombre = nombre;
+		maest.numClases = atoi(numClases.c_str());
+		maest.usuario = usuario;
+		
+		profes->Push(maest);
+		
+		i++;
+	}
+	pilaTam=i;
 	archivo.close();
 	
 	return profes;
@@ -135,5 +171,8 @@ void  Archivo::escribirArchivo(string ruta, string texto){
 		archivo << texto + " ";
 		archivo.close();
 	}
+}
+int Archivo::getPilaTam(){
+	return pilaTam;
 }
 #endif

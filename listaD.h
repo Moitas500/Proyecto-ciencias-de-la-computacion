@@ -14,7 +14,7 @@ class listaD{
 		inicio = new duo <T>;
 		final = new duo <T>;
 		inicio->clave= -1;
-		final->clave=50505050505050;
+		final->clave=99999999999;
 		inicio->sig=final;
 		puntero=inicio;
 	}
@@ -25,7 +25,8 @@ class listaD{
 	void obtenerTodos();	
 	void obtener(int clave);
 	bool obtener(duo<T> &estructura);		//Usar solo al momento de guardar el archivo;
-	int getTam();	
+	int getTam();
+	void reiniciarPuntero();	
 };
 
 template <class T>
@@ -134,5 +135,9 @@ bool listaD<T>::obtener(duo<T> &estructura){
 template <class T>
 int listaD<T>::getTam(){
 	return tam;
+}
+template <class T>
+void listaD<T>:: reiniciarPuntero(){
+    puntero=inicio;
 }
 #endif

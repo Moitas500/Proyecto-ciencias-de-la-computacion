@@ -3,39 +3,70 @@
 #include <iostream>
 #include <stdlib.h>
 #include "listaD.h"
+#include "pila.h"
 #include "Archivos.h"
 #include "Profesor.h"
+#include "estructura.h"
 
 struct notas {string codigo;
-             listaD<string> *archivos;
+             listaD<string> archivos;
 			 };
 struct clasesArray {int cedula;
-             notas *clases[];
+             notas *clases;
 			 };
 
 class clase{
 	listaD<maestro> profes;
-	clasesArray *arregloClases[]; //¿Puede ser un doble aputador?
+	clasesArray *arregloClases;
+	maestro maesAux; //¿Puede ser un doble aputador?
 	public: clase(){
-		Archivo *file = new Archivo();
-		profes= file->leerArchivoProfesor("Profesores/listaProfesores.txt");
-		arregloClases[profes.getTam()]= new clasesArray();
-		cout<<profes.getTam()<<endl;
-		//pruebas
+		Archivo file;	
+		profes= file.leerArchivoProfesor("Profesores/listaProfesores.txt");
+		arregloClases= new clasesArray[profes.getTam()];
 		// se crea una lista de archivos que ha subido el profesor
-		listaD<string> *archivos= new listaD<string>;
-		archivos->insertar(1,"notassegundoCorte.txt"); //se insertan algunos datos de prueba
-		archivos->insertar(0,"notasprimerCorte.txt");
+		listaD<string> archivos;
+		archivos.insertar(1,"notassegundoCorte.txt"); //se insertan algunos datos de prueba
+		archivos.insertar(0,"notasprimerCorte.txt");
 		//se crea una estructura la cual es un un codigo y la lista de archivos
-		notas *notasProf1 = new notas;
-		notasProf1->codigo ="CCI82";
-		notasProf1->archivos = archivos;
+		duo<maestro> aux;
+		int i=0;
+		clasesArray clasesAux;
+		notas clase;
+		while(profes.obtener(aux)){
+			maesAux= aux.dato;
+			clasesAux.cedula=maesAux.cedula;
+			clasesAux.clases=  new notas[maesAux.numClases];
+			for(int j=0;j<maesAux.numClases;j++){
+				clase.codigo="CCI82";
+				clase.archivos = archivos;
+				clasesAux.clases[j]=clase;
+				//cout<<"funcionaa"<<endl;
+			}
+			arregloClases[i]=clasesAux;	
+			i++;
+		}
+		profes.reiniciarPuntero();
+		/*for(int i=0;i<file.getPilaTam();i++){
+			
+			maesAux= profes.Pop();
+			cout<<maesAux.cedula<<endl;//************************************ERROR*******************
+			arregloClases[i] = new clasesArray;
+			arregloClases[i]->cedula = maesAux.cedula;
+			for(int j=0;j<maesAux.numClases;j++){
+				notas *clase = new notas();
+				clase->codigo="CCI82";
+				clase->archivos = archivos;
+				arregloClases[i]->clases[i]=clase;
+			}
+				
+		}*/
+
 		// se crea una estructura la cual tiene la cedula y un arreglo que es el que guarda las clases de cada profesor
-		clasesArray *profesor1= new clasesArray;
+		/*clasesArray *profesor1= new clasesArray;
 		profesor1->cedula = 79458124;
-		profesor1->clases[0] = notasProf1;
+		profesor1->clases[0] = notasProf1;*/
 		//arreglo de clases principal el que guarda la cedula de cada profesor y su arreglo de clases qque apunta a la lista de archivos
-		arregloClases[0]=profesor1;
+		/*arregloClases[0]=profesor1;*/
 	};
 	void imprimir();
 	void anadirClase(int cedula);
@@ -47,7 +78,9 @@ class clase{
 
 void clase::imprimir(){
 	//funcion de prueba pero se puede cambiar para que imprima los archivos de cada profesor segun su cedula y codigo de clase (tambien se puede pensar en usar sobrecarga)
-	arregloClases[0]->clases[0]->archivos->obtenerTodos();
+	arregloClases[0].clases[0].archivos.obtenerTodos();
+	cout<<arregloClases[4].cedula<<endl;
+	//arregloClases[0]->clases[0]->archivos->obtenerTodos();
 }
 void clase::anadirClase(int cedula){
  //pensar en usar algoritmos de busqueda en arreglos	
