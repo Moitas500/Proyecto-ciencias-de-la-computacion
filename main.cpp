@@ -250,16 +250,19 @@ void menu_director(){
 
 duo<string> menu_registrarTema(){
 	system("cls");
-	duo<string> tema;
+	duo<string> tema1;
+	string nombre;
+	int clave;
 	
 	cout << "\t\tTEMAS" << endl;
 	
-	cout << "Digite el nombre de el tema que desea buscar: ";
-	cin >> tema.dato;
-	cout << "Digite el codigo de el tema que desea buscar: ";
-	cin >> tema.clave;
-	
-	return tema;
+	cout << "Digite el nombre de el tema que desea añadir: ";
+ 	getline(cin,nombre);
+	cout << "Digite el codigo de el tema que desea añadir: ";
+	cin>>clave;
+	tema1.clave=clave;
+	tema1.dato=nombre;
+	return tema1;
 }
 
 int menuBuscarTema(){
@@ -287,16 +290,12 @@ void menu_temas(){
 	
 	do{
 		opcion = menu(titulo, opciones, n);
-		
 		//Alternativas
 		switch(opcion){
 			case 1:{
 				duo<string> tema;
-				listaD<string> temas;
+				listaD<string> temas= file.leerTemas();
 				tema.clave = menuBuscarTema();
-					
-				file.leerTemas(temas);
-					
 				tema = temas.obtener(tema.clave);
 					
 				if(tema.clave == -1){
@@ -316,15 +315,14 @@ void menu_temas(){
 			case 2:{
 				duo<string> tema = menu_registrarTema();
 				listaD<string> temas;
-
 				if(file.crearArchivo("Temas/Topics.txt")){		
 					temas.insertar(tema.clave,tema.dato);
-					
 					file.escribirTemas(temas);
 				}else{
-					file.leerTemas(temas);
+					temas =file.leerTemas();
 					temas.insertar(tema.clave,tema.dato);
-					
+					file.eliminarArchivo("Temas/Topics.txt");
+					file.crearArchivo("Temas/Topics.txt");
 					file.escribirTemas(temas);
 				}
 						
@@ -335,20 +333,16 @@ void menu_temas(){
 				listaD<string> temas;
 				duo<string> tema = menu_registrarTema();
 				
-				file.leerTemas(temas);
-					
+				temas= file.leerTemas();
 				temas.borrar(tema.clave);
-					
-				file.eliminarArchivo("Temas/Topics.txt");
-				file.crearArchivo("Temas/Topics.txt");
+				file.escribirTemas(temas);
 
 				break;
 			}
 				
 			case 4:{
 				listaD<string> temas;
-				file.leerTemas(temas);
-					
+				temas=file.leerTemas();
 				menuListaTemas(temas);
 				break;	
 			}

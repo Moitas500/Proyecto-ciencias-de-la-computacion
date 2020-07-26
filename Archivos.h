@@ -17,7 +17,7 @@ class Archivo{
 		string linea;
 		public:Archivo(){
 				}	
-		void leerTemas(listaD<string> &lista);
+		listaD<string> leerTemas();
 		void escribirTemas(listaD<string> lista);
 		listaD<maestro>  leerArchivoProfesor(string ruta);
 		Director leerArchivoDirector(string ruta);
@@ -27,7 +27,8 @@ class Archivo{
 
 };
 
-void Archivo::leerTemas(listaD<string> &lista){
+listaD<string> Archivo::leerTemas(){
+	listaD<string> temas;
 	archivo.open("Temas/Topics.txt",ios::in);	//Se abre el archivo en modo lectura
 	if(archivo.fail()){
 		cout<<"No se pudo abrir el archivo"<<endl;
@@ -39,11 +40,14 @@ void Archivo::leerTemas(listaD<string> &lista){
 	while(!archivo.eof()){
 			getline(archivo,clave);
 			getline(archivo,linea);
-			lista.insertar(atoi(clave.c_str()),linea);	
+			temas.insertar(atoi(clave.c_str()),linea);	
 	}
-	archivo.close();	
+	archivo.close();
+	return temas;
+	
 }
 void Archivo::escribirTemas(listaD<string> lista){
+	int i=1;
 	archivoS.open("Temas/Topics.txt",ios::out);
 	duo<string> aux;
 	if(archivoS.fail()){
@@ -52,9 +56,13 @@ void Archivo::escribirTemas(listaD<string> lista){
 		exit(1);
 	}
 	while(lista.obtener(aux)){
-		archivoS<<aux.clave<<endl;;
-		archivoS<<aux.dato<<endl;;
-	}
+		if(i!=1){
+			archivoS<<endl;
+		}
+		archivoS<<aux.clave<<endl;
+		archivoS<<aux.dato;
+		i++;
+	}	
 	archivoS.close();
 }
 listaD<maestro> Archivo::leerArchivoProfesor(string ruta){
