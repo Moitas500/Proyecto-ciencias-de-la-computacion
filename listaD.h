@@ -118,7 +118,7 @@ duo<T> listaD<T>::obtener(int clave){
 		return *aux;
 	} else {
 		cout<<"No se encontró la clave"<<endl;
-		aux=NULL;
+		aux->clave=-1;
 		return *aux;
 	}
 }

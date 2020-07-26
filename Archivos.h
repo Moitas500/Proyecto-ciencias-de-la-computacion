@@ -28,7 +28,7 @@ class Archivo{
 };
 
 void Archivo::leerTemas(listaD<string> &lista){
-	archivo.open("Topics.txt",ios::in);	//Se abre el archivo en modo lectura
+	archivo.open("Temas/Topics.txt",ios::in);	//Se abre el archivo en modo lectura
 	if(archivo.fail()){
 		cout<<"No se pudo abrir el archivo"<<endl;
 		//Falta crearlo en caso de que no lo encuentre
@@ -44,7 +44,7 @@ void Archivo::leerTemas(listaD<string> &lista){
 	archivo.close();	
 }
 void Archivo::escribirTemas(listaD<string> lista){
-	archivoS.open("Topics.txt",ios::out);
+	archivoS.open("Temas/Topics.txt",ios::out);
 	duo<string> aux;
 	if(archivoS.fail()){
 		cout<<"No se pudo abrir el archivo"<<endl;

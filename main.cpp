@@ -19,7 +19,7 @@ using namespace std;
 //Menu al entrar como director
 void menu_director();
 //Menu al entrar al area de cursos
-void menu_cursos();
+void menu_temas();
 //Menu para ver a los profesores
 void menu_profesores();
 //Menu al elegir la opcion estudiantes
@@ -32,10 +32,14 @@ void menu_profesor();
 Director menu_registrar();
 //Registrar profesor
 Profesor menu_registrarProfesor();
+//Registrar un nuevo curso
+duo<string> menu_registrarTema();
 //Metodo para saber si el archivo existe en la ruta seleccionada
 bool existeArchivo(string ruta);
 //Menu para imprimir la lista de profesores
 int menuLista(listaD<maestro> profes);
+//Menu para imprimir la lista de maestros
+int menuListaTemas(listaD<string> temas);
 //Modelo general del menu para evitar repetir codigo
 int menu(const char *titulo, const char *opciones[], int n); 
 //Menu para loguearse
@@ -44,6 +48,8 @@ bool menu_log(string _usuario, string _contrasena);
 void anadirProfesorArchivo(Profesor profe);
 //Metodo que pide los datos de el profesor
 int menuBuscarProfesor();
+//Menu para buscar tema
+int menuBuscarTema();
 //Metodo que busca a un profesor segun la cedula
 void buscarProfesor(int cedula, listaD<maestro> profes);
 
@@ -179,7 +185,7 @@ void menu_profesor(){
 	//Titulo del menu
 	const char *titulo = "MENU PROFESOR";
 	//Opciones del menu
-	const char *opciones[] = {"Consultar cursos","Esquema de notas","Consultar estudiantes","Salir"};
+	const char *opciones[] = {"Consultar temas","Esquema de notas","Consultar estudiantes","Salir"};
 	//Numero de opciones
 	int n = 4;
 	
@@ -189,7 +195,7 @@ void menu_profesor(){
 		//Alternativas
 		switch(opcion){
 			case 1:
-				menu_cursos();
+				menu_temas();
 				break;
 				
 			case 2:
@@ -213,7 +219,7 @@ void menu_director(){
 	//Titulo del menu
 	const char *titulo = "MENU DIRECTOR";
 	//Opciones del menu
-	const char *opciones[] = {"Consultar cursos","Consultar profesores","Consultar estudiantes","Salir"};
+	const char *opciones[] = {"Consultar temas","Consultar profesores","Consultar estudiantes","Salir"};
 	//Numero de opciones
 	int n = 4;
 	
@@ -223,7 +229,7 @@ void menu_director(){
 		//Alternativas
 		switch(opcion){
 			case 1:
-				menu_cursos();
+				menu_temas();
 				break;
 				
 			case 2:
@@ -242,26 +248,112 @@ void menu_director(){
 	}while(repite);
 }
 
-void menu_cursos(){
+duo<string> menu_registrarTema(){
+	system("cls");
+	duo<string> tema;
+	
+	cout << "\t\tTEMAS" << endl;
+	
+	cout << "Digite el nombre de el tema que desea buscar: ";
+	cin >> tema.dato;
+	cout << "Digite el codigo de el tema que desea buscar: ";
+	cin >> tema.clave;
+	
+	return tema;
+}
+
+int menuBuscarTema(){
+	system("cls");
+	int codigo;
+	
+	cout << "\t\t BUSCAR TEMA" << endl;
+	
+	cout << "Digite el codigo de el tema que desea buscar: ";
+	cin >> codigo;
+	
+	return codigo;
+}
+
+void menu_temas(){
+	Archivo file;
 	bool repite = true;
 	int opcion;
 	//Titulo del menu
-	const char *titulo = "MENU CURSOS";
+	const char *titulo = "MENU TEMAS";
 	//Opciones del menu
-	const char *opciones[] = {"Buscar curso","Salir"};
+	const char *opciones[] = {"Buscar tema","Agregar tema","Borrar tema","Lista de temas","Salir"};
 	//Numero de opciones
-	int n = 2;
+	int n = 5;
 	
 	do{
 		opcion = menu(titulo, opciones, n);
 		
 		//Alternativas
 		switch(opcion){
-			case 1:
-				cout << "hola";
-				break;
+			case 1:{
+				duo<string> tema;
+				listaD<string> temas;
+				tema.clave = menuBuscarTema();
+					
+				file.leerTemas(temas);
+					
+				tema = temas.obtener(tema.clave);
+					
+				if(tema.clave == -1){
+					system("cls");
+					cout << "No se encontro el tema especificado";
+					system("pause");
+				}else{
+					listaD<string> temas2;
+					temas2.insertar(tema.clave,tema.dato);
+						
+					menuListaTemas(temas2);
+				}		
 				
-			case 2:
+				break;
+			}
+			
+			case 2:{
+				duo<string> tema = menu_registrarTema();
+				listaD<string> temas;
+
+				if(file.crearArchivo("Temas/Topics.txt")){		
+					temas.insertar(tema.clave,tema.dato);
+					
+					file.escribirTemas(temas);
+				}else{
+					file.leerTemas(temas);
+					temas.insertar(tema.clave,tema.dato);
+					
+					file.escribirTemas(temas);
+				}
+						
+				break;
+			}
+			
+			case 3:{
+				listaD<string> temas;
+				duo<string> tema = menu_registrarTema();
+				
+				file.leerTemas(temas);
+					
+				temas.borrar(tema.clave);
+					
+				file.eliminarArchivo("Temas/Topics.txt");
+				file.crearArchivo("Temas/Topics.txt");
+
+				break;
+			}
+				
+			case 4:{
+				listaD<string> temas;
+				file.leerTemas(temas);
+					
+				menuListaTemas(temas);
+				break;	
+			}
+				
+			case 5:
 				repite = false;
 				break; 	 		
 		}
@@ -395,6 +487,65 @@ void menu_estudiantes(){
 		}
 		
 	}while(repite);
+}
+
+int menuListaTemas(listaD<string> temas){
+	duo<string> tema;
+	int opcionSeleccionada = 1;
+	int tecla;
+	bool repite = true;	
+				
+	do{
+		system("cls");
+				
+		gotoxy(15,2); cout << "LISTA DE TEMAS" << endl;
+		gotoxy(5, 3 + opcionSeleccionada); cout << "==>";
+					
+		int i;
+
+		for((i=0);(i<temas.getTam());(i++))
+	    {
+	    	temas.obtener(tema); 
+	    	gotoxy(10, 4 + i); cout << i + 1 << ") " << "Codigo: " << tema.clave << " Tema: " << tema.dato;
+		}
+		temas.reiniciarPuntero();			
+		gotoxy(10,4+i);
+		cout << i + 1 << ") " << "Salir";
+					
+		do
+		{
+			tecla = getch();
+		}while(tecla != TECLA_ARRIBA && tecla != TECLA_ABAJO && tecla != ENTER);	
+				
+		switch(tecla)
+		{
+			case TECLA_ARRIBA:
+				opcionSeleccionada --;
+				
+				if (opcionSeleccionada < 1)
+				{
+					opcionSeleccionada = temas.getTam() + 1;
+				}
+				break;
+			
+			case TECLA_ABAJO:
+				opcionSeleccionada ++;
+				
+				if (opcionSeleccionada > temas.getTam() + 1)
+				{
+					opcionSeleccionada = 1;
+				}
+				
+				break;
+				
+			case ENTER:
+				repite = false;
+				break;
+			}	
+					
+	}while(repite);
+	
+	return opcionSeleccionada;
 }
 
 int menuLista(listaD<maestro> profes){		//Preguntarle a camilo para que sirve esta tambien
