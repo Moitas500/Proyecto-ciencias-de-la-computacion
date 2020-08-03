@@ -1,14 +1,4 @@
-0
-Programacion Orientada
 1
-Informatica
+probabisad
 2
-Matematicas especiales
-3
-Matematicas discretas
-4
-Probabilidad
-7
-Historia
-9
-Fisica 1
+dadsdas

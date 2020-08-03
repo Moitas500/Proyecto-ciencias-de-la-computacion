@@ -1,6 +1,6 @@
 #include <iostream>
-
 #include "Persona.h"
+#include "listaD.h"
 
 #ifndef AS
 #define AS
@@ -14,6 +14,7 @@ struct maestro{
 	string apellidos;
 	int cedula;
 	int numClases;
+	int cortes;
 };
 
 class Profesor : public Persona{
@@ -22,9 +23,12 @@ class Profesor : public Persona{
 		int cedula;
 		string apellidos;
 		int numClases;
+		int cortes;
 	//Metodos:
 	public:
-		Profesor(string _nombre, string _contrasena, string _usuario, int _cedula, string _apellidos, int _numClases);
+		Profesor(string _nombre, string _contrasena, string _usuario, int _cedula, string _apellidos, int _numClases, int _cortes);
+		int getCortes();
+		void setCortes(int _cortes);
 		int getCedula();
 		string getApellidos();
 		int getNumClases();
@@ -34,10 +38,19 @@ class Profesor : public Persona{
 };
 
 //Contructor
-Profesor::Profesor(string _nombre, string _contrasena, string _usuario, int _cedula, string _apellidos, int _numClases) : Persona(_nombre, _contrasena, _usuario){
+Profesor::Profesor(string _nombre, string _contrasena, string _usuario, int _cedula, string _apellidos, int _numClases, int _cortes) : Persona(_nombre, _contrasena, _usuario){
 	this->apellidos = _apellidos;
 	this->cedula = _cedula;
 	this->numClases = _numClases;
+	this->cortes = _cortes;
+}
+//Get los cortes del profesor
+int Profesor::getCortes(){
+	return this->cortes;
+}
+//Setear los cortes del profesor
+void Profesor::setCortes(int _cortes){
+	this->cortes = _cortes;
 }
 //Setear los apellidos del profesor
 void Profesor::setApellido(string _apellido){

@@ -1,9 +1,0 @@
-nombre1 apellido1 contrasena1 1
- 1
- usuario1 nombre2 apellido2 contrasena2 2
- 2
- usuario2 nombre3 apellido3 contrasena3 3
- 3
- usuario3 Pablo Alejandro 1234 123456789
- 2
- POAJ 

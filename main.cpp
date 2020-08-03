@@ -27,7 +27,9 @@ void menu_estudiantes();
 //Menu inicial
 void menu_seleccion();
 //Menu al entrar como profesor
-void menu_profesor();
+void menu_profesor(Profesor profe);
+//Menu para ver y modificar el esquema de notas
+void menu_esquema(Profesor profe);
 //Menu para registrar como director
 Director menu_registrar();
 //Registrar profesor
@@ -43,7 +45,7 @@ int menuListaTemas(listaD<string> temas);
 //Modelo general del menu para evitar repetir codigo
 int menu(const char *titulo, const char *opciones[], int n); 
 //Menu para loguearse
-bool menu_log(string _usuario, string _contrasena);
+Persona menu_log();
 //Metodo para añadir un profesor al archivo
 void anadirProfesorArchivo(Profesor profe);
 //Metodo que pide los datos de el profesor
@@ -98,7 +100,9 @@ void menu_seleccion(){
 					
 					Director dir = file.leerArchivoDirector("director/datos.txt");
 					
-					if(menu_log(dir.getUsuario(),dir.getContrasena())){
+					Persona per = menu_log();
+					
+					if(per.getUsuario() == dir.getUsuario() && per.getContrasena() == dir.getContrasena()){
 						menu_director();
 					}else{
 						system("cls");
@@ -108,6 +112,36 @@ void menu_seleccion(){
 			}
 				
 			case 2:
+				if(file.crearArchivo("Profesores/listaProfesores.txt")){
+					system("cls");
+					cout << "Aun no se ha creado ningún profesor" << endl;
+					system("pause");
+					file.eliminarArchivo("Profesores/listaProfesores.txt");
+				}else{
+					int cedula;
+					listaD<maestro> maest = file.leerArchivoProfesor("Profesores/listaProfesores.txt");
+					
+					Persona per = menu_log();
+					cout << "\n\t Cedula: ";
+					cin >> cedula;
+					
+					if(maest.isIN(cedula)){
+						duo<maestro> ma;
+						ma.clave = cedula;
+						ma = maest.obtener(ma.clave);
+						maestro m = ma.dato;
+						
+						if(m.usuario == per.getUsuario() && m.contrasena == per.getContrasena() && m.cedula == cedula){
+							Profesor profe(m.nombre,m.contrasena,m.usuario,m.cedula,m.apellidos,m.numClases,m.cortes);
+							menu_profesor(profe);
+						}else{
+							system("cls");
+						}
+						
+					}else{
+						system("cls");
+					}
+				}
 				break;
 				
 			case 3:
@@ -118,25 +152,24 @@ void menu_seleccion(){
 	}while(repite);
 }
 
-bool menu_log(string _usuario, string _contrasena){
+Persona menu_log(){
 	string usuario, contrasena;
 	system("cls");
 	cout << "\t\t\t LOGIN" << endl;
 	cout << "\n\t Usuario: ";
-	getline(cin,usuario);
+	cin >> usuario;
 	cout << "\n\t Contraseña: ";
-	getline(cin,contrasena);
+	cin >> contrasena;
 	
-	if(usuario == _usuario && contrasena == _contrasena){
-		return true;
-	}
+	Persona per(" ",contrasena,usuario);
 	
-	return false;
+	return per;
 }
 
 Profesor menu_registrarProfesor(){
 	string nombre, usuario, contrasena, apellido;
 	int cedula, numClases;
+	int cortes = 3;
 	
 	system("cls");
 	
@@ -156,7 +189,7 @@ Profesor menu_registrarProfesor(){
 	
 	system("pause");
 	
-	Profesor profe(nombre,contrasena,usuario,cedula,apellido,numClases);
+	Profesor profe(nombre,contrasena,usuario,cedula,apellido,numClases,cortes);
 	
 	return profe;
 }
@@ -179,7 +212,7 @@ Director menu_registrar(){
 	return dir;
 }
 
-void menu_profesor(){
+void menu_profesor(Profesor profe){
 	bool repite = true;
 	int opcion;
 	//Titulo del menu
@@ -190,7 +223,7 @@ void menu_profesor(){
 	int n = 4;
 	
 	do{
-		opcion = menu(titulo, opciones, n);
+		opcion = menu(titulo, opciones, n);		
 		
 		//Alternativas
 		switch(opcion){
@@ -199,6 +232,7 @@ void menu_profesor(){
 				break;
 				
 			case 2:
+				menu_esquema(profe);
 				break;
 				
 			case 3:
@@ -210,6 +244,49 @@ void menu_profesor(){
 				break; 		
 		}
 		
+	}while(repite);
+}
+
+void menu_esquema(Profesor profe){
+	bool repite = true;
+	int opcion;
+	//Titulo del menu
+	const char *titulo = "MENU ESQUEMA";
+	//Opciones del menu
+	const char *opciones[] = {"Cambiar numero de cortes","Modificar o agregar tipo de evaluacion","Salir"};
+	//Numero de opciones
+	int n = 3;
+	Archivo file;
+	
+	do{
+		opcion = menu(titulo, opciones, n);
+		//Alternativas
+		switch(opcion){
+			case 1:{		
+				system("cls");
+				int cortes;
+			
+				listaD<maestro> profes = file.leerArchivoProfesor("Profesores/listaProfesores.txt");
+				
+				cout << "Sen@r " << profe.getNombre() << " " << profe.getApellidos() << " " <<  "actualmente usted tiene: " << profe.getCortes() << " cortes." << endl;
+				
+				cout << "Digite la cantidad de cortes que desea realizar: ";
+				cin >> cortes;
+				
+				file.modificarCortes(profe, cortes);
+				
+				break;
+			}
+			
+			case 2:{
+				break;
+			}
+			
+			case 3:{
+				repite = false;
+				break;
+			}
+		}
 	}while(repite);
 }
 
@@ -358,6 +435,7 @@ void menu_temas(){
 void buscarProfesor(int cedula, listaD<maestro> profes){		//Preguntarle a camilo para que sirve esta función
 	
 	if(profes.isIN(cedula)){
+		
 		listaD<maestro> maestros;
 		maestros.insertar(profes.obtener(cedula).clave,profes.obtener(cedula).dato);
 		maestros.insertar(profes.obtener(cedula).clave,profes.obtener(cedula).dato);
@@ -443,10 +521,13 @@ void anadirProfesorArchivo(Profesor profe){
 	Archivo file;
 	stringstream ss;
 	stringstream sa;
-	ss << profe.getCedula() << endl;		
+	stringstream sd;
+	ss << profe.getCedula();		
 	string cedula = ss.str();
-	sa << profe.getNumClases() << endl;
+	sa << profe.getNumClases();
 	string numClases = sa.str();
+	sd << profe.getCortes() << endl;
+	string cortes = sd.str();
 					
 	file.escribirArchivo("Profesores/listaProfesores.txt",profe.getNombre());
 	file.escribirArchivo("Profesores/listaProfesores.txt",profe.getApellidos());
@@ -454,6 +535,7 @@ void anadirProfesorArchivo(Profesor profe){
 	file.escribirArchivo("Profesores/listaProfesores.txt",cedula);
 	file.escribirArchivo("Profesores/listaProfesores.txt",numClases);
 	file.escribirArchivo("Profesores/listaProfesores.txt",profe.getUsuario());
+	file.escribirArchivo("Profesores/listaProfesores.txt",cortes);
 }
 
 void menu_estudiantes(){

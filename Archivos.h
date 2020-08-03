@@ -8,6 +8,7 @@
 #include "listaD.h"
 #include "Director.h"
 #include "Profesor.h"
+#include "estructura.h"
 
 using namespace std;
 
@@ -24,8 +25,52 @@ class Archivo{
 		bool crearArchivo(string ruta);
 		bool eliminarArchivo(string ruta);
 		void escribirArchivo(string ruta, string texto);
+		void modificarCortes(Profesor profe,int cortes);
 
 };
+
+void Archivo::modificarCortes(Profesor profe,int cortes){
+	listaD<maestro> maest = Archivo::leerArchivoProfesor("Profesores/listaProfesores.txt");
+	
+	maestro mast;
+	mast.apellidos = profe.getApellidos();
+	mast.cedula = profe.getCedula();
+	mast.contrasena = profe.getContrasena();
+	mast.cortes = cortes;
+	mast.nombre = profe.getNombre();
+	mast.numClases = profe.getNumClases();
+	mast.usuario = profe.getUsuario();
+	
+	maest.cambiar(profe.getCedula(), mast);
+	
+	Archivo::eliminarArchivo("Profesores/listaProfesores.txt");
+	Archivo::crearArchivo("Profesores/listaProfesores.txt");
+	
+	duo<maestro> m;
+	
+	for(int i=1; i<maest.getTam(); i++){
+		maest.obtener(m);
+		mast = m.dato;
+		
+		stringstream ss;
+		stringstream sa;
+		stringstream sd;
+		
+		ss << mast.cedula;		
+		string cedula = ss.str();
+		sa << mast.numClases;
+		string numClases = sa.str();
+		sd << mast.cortes << endl;
+		string cortes = sd.str();
+		
+		ofstream archivo;
+		archivo.open("Profesores/listaProfesores.txt",ios::app);
+		
+		archivo << mast.nombre << " " << mast.apellidos << " " << mast.contrasena << " " << cedula << " " << numClases << " " << mast.usuario << " " << cortes << endl;
+	}
+	
+	maest.reiniciarPuntero();
+}
 
 listaD<string> Archivo::leerTemas(){
 	listaD<string> temas;
@@ -66,7 +111,7 @@ void Archivo::escribirTemas(listaD<string> lista){
 	archivoS.close();
 }
 listaD<maestro> Archivo::leerArchivoProfesor(string ruta){
-	string nombre, usuario, contrasena, apellidos, cedula, numClases;
+	string nombre, usuario, contrasena, apellidos, cedula, numClases, cortes;
 	int i = 1;
 	ifstream archivo(ruta.c_str());
 	listaD<maestro> profes;
@@ -78,14 +123,16 @@ listaD<maestro> Archivo::leerArchivoProfesor(string ruta){
 		archivo >> cedula;
 		archivo >> numClases;
 		archivo >> usuario;
+		archivo >> cortes;
 		
 		maestro maest;
-		maest.apellidos = apellidos;
-		maest.cedula = atoi(cedula.c_str());
-		maest.contrasena = contrasena;
 		maest.nombre = nombre;
+		maest.apellidos = apellidos;
+		maest.contrasena = contrasena;
+		maest.cedula = atoi(cedula.c_str());
 		maest.numClases = atoi(numClases.c_str());
 		maest.usuario = usuario;
+		maest.cortes = atoi(cortes.c_str());
 		
 		profes.insertar(maest.cedula,maest);
 		
