@@ -3,9 +3,12 @@
 #include<iostream>
 #include<string>
 #include "estructura.h"
-#include "listaD.h"
 #include "Trio.h"
 using namespace std;
+
+struct cortesNotas{
+	trio *notas;
+};
 
 class cortesN {
 	trio *notas;

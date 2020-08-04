@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Persona.h"
-#include "listaD.h"
 #include "CortesNotas.h"
 
 #ifndef AS
@@ -25,20 +24,20 @@ class Profesor : public Persona{
 		string apellidos;
 		int numClases;
 		int cortes;
-		listaD<cortesN> cort;
+		listaD<cortesNotas> cort;
 	//Metodos:
 	public:
 		Profesor(string _nombre, string _contrasena, string _usuario, int _cedula, string _apellidos, int _numClases, int _cortes);
+		listaD<cortesNotas> getCortesNotas();
 		int getCortes();
-		void setCortes(int _cortes);
 		int getCedula();
 		string getApellidos();
 		int getNumClases();
 		void setCedula(int _cedula);
 		void setApellido(string _apellido);
 		void setNumClases(int _numClases);
-		void setListaDeCortes(listaD<cortesN> _cort);
-		listaD<cortesN> getListaDeCortes();
+		void setCortes(int _cortes);
+		void setCortesNotas(listaD<cortesNotas> _cort);
 };
 
 //Contructor
@@ -48,13 +47,13 @@ Profesor::Profesor(string _nombre, string _contrasena, string _usuario, int _ced
 	this->numClases = _numClases;
 	this->cortes = _cortes;
 }
-//Set de la lista de cortes
-void Profesor::setListaDeCortes(listaD<cortesN> _cort){
-	this->cort = _cort;
-}
-//Get de la lista de cortes
-listaD<cortesN> Profesor::getListaDeCortes(){
+//Get de la lista de los cortes de notas
+listaD<cortesNotas> Profesor::getCortesNotas(){
 	return this->cort;
+}
+//Set de la lista de los cortes de notas
+void Profesor::setCortesNotas(listaD<cortesNotas>_cort){
+	this->cort = _cort;
 }
 //Get los cortes del profesor
 int Profesor::getCortes(){

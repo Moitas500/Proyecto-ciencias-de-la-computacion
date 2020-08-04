@@ -10,6 +10,7 @@
 #include "Profesor.h"
 #include "Archivos.h"
 #include "estructura.h"
+#include "CortesNotas.h"
 
 #define TECLA_ARRIBA 72
 #define TECLA_ABAJO 80
@@ -91,7 +92,7 @@ void menu_seleccion(){
 		
 		//Alternativas
 		switch(opcion){
-			case 1:{		
+			case 1:{	
 				if(file.crearArchivo("director/datos.txt")){
 					Director dir = menu_registrar();
 					file.escribirArchivo("director/datos.txt",dir.getNombre());
@@ -264,7 +265,8 @@ void menu_esquema(Profesor profe){
 		opcion = menu(titulo, opciones, n);
 		//Alternativas
 		switch(opcion){
-			case 1:{		
+			case 1:{	
+/*
 				system("cls");
 				int cortes;
 			
@@ -282,8 +284,27 @@ void menu_esquema(Profesor profe){
 				}else{
 					file.eliminarArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt");
 					file.crearArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt");
+					profe = menuListaDeCortes(profe, cortes);
 				}
+
+				listaD<cortesNotas> _cort;
 				
+				_cort = profe.getCortesNotas();
+				
+				for(int i=0;i<profe.getCortes();i++){
+					cortesNotas actividad;
+					duo<cortesNotas> act;
+					_cort.obtener(act);
+					actividad = act.dato;
+					
+					stringstream ss;
+					ss << actividad.notas->porcentaje << endl;
+					string porcentaje = ss.str();
+					
+					file.escribirArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt", actividad.notas->tipo);
+					file.escribirArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt", porcentaje);
+				}
+*/
 				break;
 			}
 			
@@ -307,37 +328,42 @@ Profesor menuListaDeCortes(Profesor profe, int cortes){
 	int actividades;
 	string nombre;
 	int porcentaje;
-	listaD<cortesN> asignar;
-	
+	listaD<cortesNotas> _cort;
+	cortesNotas actividad;
+/*
 	while(i < cortes){
 		
 		cout << "¿Cuantas actividades quiere realizar para el " << i+1 << " corte?" << endl;
 		cin >> actividades;
-		
-		cortesN corte(actividades);
 		
 		while(a < actividades){
 			cout << "Digite la " << a+1 << " actividad" << endl;
 			cin >> nombre;
 			cout << endl << "Digite el valor de dicha actividad" << endl;
 			cin >> porcentaje;
+
+			trio *estructura;
 			
-			listaD<int> parejas;
-			listaD<listaD<int> > notas;
-			parejas.insertar(1,100);
-			notas.insertar(i,parejas);
+			listaD<int> parejas;	//La primera lista de parejas que va a tener la actividad
+			listaD<listaD<int> > notas;//La lista de listas de parejas de la primera actividad
+			int c=1;
+			parejas.insertar(1,100);//Le insertamos una pareja a la lista
+			notas.insertar(c,parejas);//Le insertamos a la lista de listas la primera lista de parejas 
 			
-			corte.insertarActividad(nombre,porcentaje,notas);
+			estructura->porcentaje = porcentaje;
+			estructura->tipo = nombre;
+			estructura->puntos = notas;
 			
+			actividad.notas = estructura;
+			
+			_cort.insertar(a,actividad);
 			a++;
 		}
 		
-		asignar.insertar(i+1,corte);	
-		
 		i++;
 	}
-	
-	profe.setListaDeCortes(asignar);
+*/
+	profe.setCortesNotas(_cort);
 	
 	return profe;
 }
