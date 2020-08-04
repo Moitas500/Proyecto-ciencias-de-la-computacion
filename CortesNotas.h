@@ -21,7 +21,7 @@ class cortesN {
 		}
 		posActual=0;
 	}
-	void insertarActividad(string tipoE,int porcentajeP, listaD<listaD<int>> puntosP );
+	void insertarActividad(string tipoE,int porcentajeP, listaD<listaD<int> > puntosP );
 	void eliminarActividad(int posicion);
 	void cambiarActividad(int posicion, trio actividad);
 	trio getElemento(int clave);
@@ -41,25 +41,24 @@ int cortesN::getPosActual(){
 	return valor;
 	
 } 
-void cortesN::insertarActividad(string tipoE,int porcentajeP, listaD<listaD<int> puntosP ){
-		posActual=getPosActual();
+void cortesN::insertarActividad(string tipoE,int porcentajeP, listaD<listaD<int> > puntosP ){
+		posActual=getPosActual();		
 		if(posActual<tam){
 			trio aux;
 			aux.tipo=tipoE;
 			aux.porcentaje=porcentajeP;
-			aux.puntos=puntos;
+			aux.puntos=puntosP;
 			notas[posActual]=aux;
-			posActual++;
 		} else {
-			cout<<"El arreglo esta lleno"
+			cout<<"El arreglo esta lleno"<<endl;
 		}
 }
-void cortesN:: eliminarActivdad(int posicion){
+void cortesN:: eliminarActividad(int posicion){
 	//Como no se puede eliminar, cambio el objeto de la posicion del arreglo para que no se muestre
 	trio aux;
 	aux.tipo="NN";
 	if(posicion<tam && posicion>=0){
-		notas[posiion]=aux;
+		notas[posicion]=aux;
 	} else {
 		cout<<"La clave no se encuentra en el arreglo"<<endl;
 	}

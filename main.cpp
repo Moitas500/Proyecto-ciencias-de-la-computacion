@@ -42,6 +42,8 @@ bool existeArchivo(string ruta);
 int menuLista(listaD<maestro> profes);
 //Menu para imprimir la lista de maestros
 int menuListaTemas(listaD<string> temas);
+//Menu lista de cortes
+Profesor menuListaDeCortes(Profesor profe, int cortes);
 //Modelo general del menu para evitar repetir codigo
 int menu(const char *titulo, const char *opciones[], int n); 
 //Menu para loguearse
@@ -275,6 +277,13 @@ void menu_esquema(Profesor profe){
 				
 				file.modificarCortes(profe, cortes);
 				
+				if(file.crearArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt")){
+					profe = menuListaDeCortes(profe, cortes);
+				}else{
+					file.eliminarArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt");
+					file.crearArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt");
+				}
+				
 				break;
 			}
 			
@@ -288,6 +297,49 @@ void menu_esquema(Profesor profe){
 			}
 		}
 	}while(repite);
+}
+
+Profesor menuListaDeCortes(Profesor profe, int cortes){
+	system("cls");
+	
+	int i=0;
+	int a=0;
+	int actividades;
+	string nombre;
+	int porcentaje;
+	listaD<cortesN> asignar;
+	
+	while(i < cortes){
+		
+		cout << "¿Cuantas actividades quiere realizar para el " << i+1 << " corte?" << endl;
+		cin >> actividades;
+		
+		cortesN corte(actividades);
+		
+		while(a < actividades){
+			cout << "Digite la " << a+1 << " actividad" << endl;
+			cin >> nombre;
+			cout << endl << "Digite el valor de dicha actividad" << endl;
+			cin >> porcentaje;
+			
+			listaD<int> parejas;
+			listaD<listaD<int> > notas;
+			parejas.insertar(1,100);
+			notas.insertar(i,parejas);
+			
+			corte.insertarActividad(nombre,porcentaje,notas);
+			
+			a++;
+		}
+		
+		asignar.insertar(i+1,corte);	
+		
+		i++;
+	}
+	
+	profe.setListaDeCortes(asignar);
+	
+	return profe;
 }
 
 void menu_director(){

@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Persona.h"
 #include "listaD.h"
+#include "CortesNotas.h"
 
 #ifndef AS
 #define AS
@@ -24,6 +25,7 @@ class Profesor : public Persona{
 		string apellidos;
 		int numClases;
 		int cortes;
+		listaD<cortesN> cort;
 	//Metodos:
 	public:
 		Profesor(string _nombre, string _contrasena, string _usuario, int _cedula, string _apellidos, int _numClases, int _cortes);
@@ -35,6 +37,8 @@ class Profesor : public Persona{
 		void setCedula(int _cedula);
 		void setApellido(string _apellido);
 		void setNumClases(int _numClases);
+		void setListaDeCortes(listaD<cortesN> _cort);
+		listaD<cortesN> getListaDeCortes();
 };
 
 //Contructor
@@ -43,6 +47,14 @@ Profesor::Profesor(string _nombre, string _contrasena, string _usuario, int _ced
 	this->cedula = _cedula;
 	this->numClases = _numClases;
 	this->cortes = _cortes;
+}
+//Set de la lista de cortes
+void Profesor::setListaDeCortes(listaD<cortesN> _cort){
+	this->cort = _cort;
+}
+//Get de la lista de cortes
+listaD<cortesN> Profesor::getListaDeCortes(){
+	return this->cort;
 }
 //Get los cortes del profesor
 int Profesor::getCortes(){
