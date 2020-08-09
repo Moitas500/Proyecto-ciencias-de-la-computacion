@@ -266,7 +266,6 @@ void menu_esquema(Profesor profe){
 		//Alternativas
 		switch(opcion){
 			case 1:{	
-/*
 				system("cls");
 				int cortes;
 			
@@ -284,27 +283,44 @@ void menu_esquema(Profesor profe){
 				}else{
 					file.eliminarArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt");
 					file.crearArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt");
+					cout<<"Entro aqui"<<endl;
 					profe = menuListaDeCortes(profe, cortes);
+					cout<<"Salio aqui"<<endl;
 				}
 
-				listaD<cortesNotas> _cort;
+				listaD<cortesN> _cort;
 				
 				_cort = profe.getCortesNotas();
-				
-				for(int i=0;i<profe.getCortes();i++){
-					cortesNotas actividad;
-					duo<cortesNotas> act;
-					_cort.obtener(act);
-					actividad = act.dato;
-					
-					stringstream ss;
-					ss << actividad.notas->porcentaje << endl;
-					string porcentaje = ss.str();
-					
-					file.escribirArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt", actividad.notas->tipo);
-					file.escribirArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt", porcentaje);
-				}
-*/
+							
+							//Aca se debe escribir el archivo de cortes/////////////////////////
+							//Este codigo imprime lo que hay en la lista de cortesNotas///////////
+							/*
+									trio elemento;	//Objeto de tipo trio que resivira las actividades en el arreglo cortesNotas
+									duo<cortesN> corte;
+									duo<int> pr;	//Elemento de tipo duo que obtendra cada una de las parejas
+									duo<listaD<int> > lista;	//Elemento de tipo duo que obtendra la lista de parejas (de la lista de listas de parejas);
+									for(int i=0;i<cortesNotas.getTam();i++){	//El for recorre la lista cortesNotas
+										cout<<endl<<endl;
+										cout<<"Para el corte "<<i+1<<endl;
+										cout<<endl;
+										corte=cortesNotas.obtener(i);
+										for(int i=0;i<(corte.dato.getTam());i++){	//For que recorre el arreglo obteniendo las actividades
+											elemento=corte.dato.getElemento(i);	//Se obtiene la actividad de la posición i
+											if(elemento.tipo!="NN"){		//Se hace la verificación que le comente
+												cout<<"Actividad "<<elemento.tipo<<endl;
+												cout<<"Porcentaje "<<elemento.porcentaje<<endl;
+												while(elemento.puntos.obtener(lista)){	//While que recorera la lista de listas de parejas para obtener cada lista de parejas
+													cout<<"Cambio de listas"<<endl;	
+													while(lista.dato.obtener(pr)){		//While que recorre la lista de parejas para obtener cada parejas
+														cout<<"Tema "<<pr.clave<<endl;	//Impresión del tema
+														cout<<"Valor "<<pr.dato<<endl;	//Impresión del porcentaje
+													}
+												}
+											}
+									
+										}
+									}
+							*/	
 				break;
 			}
 			
@@ -322,49 +338,47 @@ void menu_esquema(Profesor profe){
 
 Profesor menuListaDeCortes(Profesor profe, int cortes){
 	system("cls");
-	
-	int i=0;
-	int a=0;
-	int actividades;
-	string nombre;
+	int numActividades;
+	int tema;
+	int valor;
+	int numA;	//Numero de actividades de cada actividad
+	int numPuntos;// Numero de puntos de cada actividad
+	string tipo;
+	int porcentajeA;
 	int porcentaje;
-	listaD<cortesNotas> _cort;
-	cortesNotas actividad;
-/*
-	while(i < cortes){
-		
-		cout << "¿Cuantas actividades quiere realizar para el " << i+1 << " corte?" << endl;
-		cin >> actividades;
-		
-		while(a < actividades){
-			cout << "Digite la " << a+1 << " actividad" << endl;
-			cin >> nombre;
-			cout << endl << "Digite el valor de dicha actividad" << endl;
-			cin >> porcentaje;
-
-			trio *estructura;
-			
-			listaD<int> parejas;	//La primera lista de parejas que va a tener la actividad
+		//La primera lista de parejas que va a tener la actividad
+	listaD<cortesN> cortesNotas;
+	for(int i=0;i<cortes;i++){
+		//////////////////////////INSERCIÓN//////////////////////////////////////////////////
+		cout<<"Ingrese el numero de Actividades el el corte "<<i+1<<endl;
+		cin>>numActividades;
+		cortesN corte(numActividades);
+		for(int x=1;x<=numActividades;x++){
+			cout<<"Ingrese nombre de la actividad "<<(x)<<endl;
+			cin>>tipo;
+			cout<<"Ingrese el porcentaje de la activdad "<<(x)<<endl;
+			cin>>porcentajeA;
+			cout<<"Ingrese el numero de estas actividades en el corte "<<(x)<<endl;
+			cin>>numA;
 			listaD<listaD<int> > notas;//La lista de listas de parejas de la primera actividad
-			int c=1;
-			parejas.insertar(1,100);//Le insertamos una pareja a la lista
-			notas.insertar(c,parejas);//Le insertamos a la lista de listas la primera lista de parejas 
-			
-			estructura->porcentaje = porcentaje;
-			estructura->tipo = nombre;
-			estructura->puntos = notas;
-			
-			actividad.notas = estructura;
-			
-			_cort.insertar(a,actividad);
-			a++;
+			for(int y=0;y<numA;y++){
+				cout<<"Ingrese el numero de puntos  para la actividad "<<y+1<<endl;
+				cin>>numPuntos;
+				listaD<int> parejas;
+				for(int z=0;z<numPuntos;z++){
+					cout<<"Ingrese el codigo del tema el punto "<<z+1<<endl;
+					cin>>tema;
+					cout<<"Ingrese el porcentaje del punto "<<z+1<<endl;
+					cin>>porcentaje;
+					parejas.insertar(tema,porcentaje);
+				}
+				notas.insertar(x,parejas);
+			}
+			corte.insertarActividad(tipo,porcentajeA,notas);
 		}
-		
-		i++;
+		cortesNotas.insertar(i,corte);
 	}
-*/
-	profe.setCortesNotas(_cort);
-	
+	profe.setCortesNotas(cortesNotas);
 	return profe;
 }
 

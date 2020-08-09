@@ -24,11 +24,11 @@ class Profesor : public Persona{
 		string apellidos;
 		int numClases;
 		int cortes;
-		listaD<cortesNotas> cort;
+		listaD<cortesN> cortesNotas;
 	//Metodos:
 	public:
 		Profesor(string _nombre, string _contrasena, string _usuario, int _cedula, string _apellidos, int _numClases, int _cortes);
-		listaD<cortesNotas> getCortesNotas();
+		listaD<cortesN> getCortesNotas();
 		int getCortes();
 		int getCedula();
 		string getApellidos();
@@ -37,7 +37,7 @@ class Profesor : public Persona{
 		void setApellido(string _apellido);
 		void setNumClases(int _numClases);
 		void setCortes(int _cortes);
-		void setCortesNotas(listaD<cortesNotas> _cort);
+		void setCortesNotas(listaD<cortesN> _cort);
 };
 
 //Contructor
@@ -48,12 +48,12 @@ Profesor::Profesor(string _nombre, string _contrasena, string _usuario, int _ced
 	this->cortes = _cortes;
 }
 //Get de la lista de los cortes de notas
-listaD<cortesNotas> Profesor::getCortesNotas(){
-	return this->cort;
+listaD<cortesN> Profesor::getCortesNotas(){
+	return this->cortesNotas;
 }
 //Set de la lista de los cortes de notas
-void Profesor::setCortesNotas(listaD<cortesNotas>_cort){
-	this->cort = _cort;
+void Profesor::setCortesNotas(listaD<cortesN>_cort){
+	this->cortesNotas = _cort;
 }
 //Get los cortes del profesor
 int Profesor::getCortes(){

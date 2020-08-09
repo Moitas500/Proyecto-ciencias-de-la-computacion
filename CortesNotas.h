@@ -6,10 +6,6 @@
 #include "Trio.h"
 using namespace std;
 
-struct cortesNotas{
-	trio *notas;
-};
-
 class cortesN {
 	trio *notas;
 	int tam, posActual;
@@ -23,6 +19,9 @@ class cortesN {
 			notas[i]=aux;
 		}
 		posActual=0;
+	}
+	cortesN(){
+		
 	}
 	void insertarActividad(string tipoE,int porcentajeP, listaD<listaD<int> > puntosP );
 	void eliminarActividad(int posicion);

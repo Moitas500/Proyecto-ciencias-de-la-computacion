@@ -121,7 +121,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit8]
-FileName=..\..\5to semestre\Ciencias de la computacion I\C++\cortes\CortesNotas.h
+FileName=CortesNotas.h
 CompileCpp=1
 Folder=
 Compile=1
@@ -131,7 +131,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit9]
-FileName=..\..\5to semestre\Ciencias de la computacion I\C++\cortes\Trio.h
+FileName=Trio.h
 CompileCpp=1
 Folder=
 Compile=1

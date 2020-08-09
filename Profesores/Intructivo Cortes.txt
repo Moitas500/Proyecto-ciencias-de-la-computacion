@@ -1,0 +1,15 @@
+//Cedula profesor 
+//Numero de cortes
+	//Numero de actividades Corte 1
+		//Nombre actividad 1 corte 1
+		//Porcentaje actividad 1 corte 1
+		//Numero de estas actividades en el corte
+			//Numero de puntos de la primera actividad de la actividad 1 del corte 1
+				//Codigo tema punto 1
+				//Porcentaje punto 1
+				//Cpdigp tema punto 2
+				//porcentaje tema punto 2
+					...		
+					...
+		//Se repite lo mismo para el numero de actividades que halla puesto
+	//Se repite lo mismo patra el numero de cortes que el usuario halla puesto
