@@ -9,7 +9,7 @@
 #include "Director.h"
 #include "Profesor.h"
 #include "estructura.h"
-
+#include "Trio.h"
 using namespace std;
 
 class Archivo{
@@ -20,6 +20,7 @@ class Archivo{
 				}	
 		listaD<string> leerTemas();
 		void escribirTemas(listaD<string> lista);
+		void escribirNotasCortes(listaD<cortesN> cortesNotas, string ruta, int cedula);
 		listaD<maestro>  leerArchivoProfesor(string ruta);
 		Director leerArchivoDirector(string ruta);
 		bool crearArchivo(string ruta);
@@ -109,6 +110,40 @@ void Archivo::escribirTemas(listaD<string> lista){
 		i++;
 	}	
 	archivoS.close();
+}
+
+void Archivo::escribirNotasCortes(listaD<cortesN> cortesNotas, string ruta, int cedula){
+
+	archivoS.open(ruta.c_str(),ios::out);
+	if(archivoS.fail()){
+		cout<<"No se pudo abrir el archivo"<<endl;
+		//Falta crearlo en caso de que no lo encuentre
+		exit(1);
+	}
+	trio elemento;	//Objeto de tipo trio que resivira las actividades en el arreglo cortesNotas
+	duo<cortesN> corte;
+	duo<int> pr;	//Elemento de tipo duo que obtendra cada una de las parejas
+	duo<listaD<int> > lista;//Elemento de tipo duo que obtendra la lista de parejas (de la lista de listas de parejas);
+	archivoS<<cedula<<endl;	
+	archivoS<<cortesNotas.getTam()<<endl;
+	for(int i=0;i<cortesNotas.getTam();i++){	//El for recorre la lista cortesNotas
+		archivoS<<i+1<<endl;
+		corte=cortesNotas.obtener(i);
+			for(int i=0;i<(corte.dato.getTam());i++){	//For que recorre el arreglo obteniendo las actividades
+				elemento=corte.dato.getElemento(i);	//Se obtiene la actividad de la posición i
+				if(elemento.tipo!="NN"){		//Se hace la verificación que le comente
+					archivoS<<elemento.tipo<<endl;
+					archivoS<<elemento.porcentaje<<endl;
+					archivoS<<elemento.puntos.getTam()<<endl;		 
+					while(elemento.puntos.obtener(lista)){	//While que recorera la lista de listas de parejas para obtener cada lista de parejas
+						while(lista.dato.obtener(pr)){		//While que recorre la lista de parejas para obtener cada parejas
+							archivoS<<pr.clave<<endl;
+							archivoS<<pr.dato<<endl;
+						}
+					}
+				}					
+			}
+		}
 }
 listaD<maestro> Archivo::leerArchivoProfesor(string ruta){
 	string nombre, usuario, contrasena, apellidos, cedula, numClases, cortes;

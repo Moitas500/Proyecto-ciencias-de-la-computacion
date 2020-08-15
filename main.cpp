@@ -277,12 +277,16 @@ void menu_esquema(Profesor profe){
 				cin >> cortes;
 				
 				file.modificarCortes(profe, cortes);
-				
-				if(file.crearArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt")){
+				stringstream ss2;
+				ss2 << profe.getCedula();
+				string ruta = "Profesores/Cortes-"+ ss2.str() +".txt";
+				if(file.crearArchivo(ruta)){
 					profe = menuListaDeCortes(profe, cortes);
 				}else{
-					file.eliminarArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt");
-					file.crearArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt");
+					file.eliminarArchivo(ruta);
+					file.crearArchivo(ruta);
+					//file.eliminarArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt");
+					//file.crearArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt");
 					cout<<"Entro aqui"<<endl;
 					profe = menuListaDeCortes(profe, cortes);
 					cout<<"Salio aqui"<<endl;
@@ -291,7 +295,7 @@ void menu_esquema(Profesor profe){
 				listaD<cortesN> _cort;
 				
 				_cort = profe.getCortesNotas();
-							
+				file.escribirNotasCortes(_cort, ruta,profe.getCedula());
 							//Aca se debe escribir el archivo de cortes/////////////////////////
 							//Este codigo imprime lo que hay en la lista de cortesNotas///////////
 							/*
