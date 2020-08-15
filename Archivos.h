@@ -127,8 +127,8 @@ void Archivo::escribirNotasCortes(listaD<cortesN> cortesNotas, string ruta, int 
 	archivoS<<cedula<<endl;	
 	archivoS<<cortesNotas.getTam()<<endl;
 	for(int i=0;i<cortesNotas.getTam();i++){	//El for recorre la lista cortesNotas
-		archivoS<<i+1<<endl;
 		corte=cortesNotas.obtener(i);
+		archivoS<<corte.dato.getTam()<<endl;
 			for(int i=0;i<(corte.dato.getTam());i++){	//For que recorre el arreglo obteniendo las actividades
 				elemento=corte.dato.getElemento(i);	//Se obtiene la actividad de la posición i
 				if(elemento.tipo!="NN"){		//Se hace la verificación que le comente
@@ -136,6 +136,7 @@ void Archivo::escribirNotasCortes(listaD<cortesN> cortesNotas, string ruta, int 
 					archivoS<<elemento.porcentaje<<endl;
 					archivoS<<elemento.puntos.getTam()<<endl;		 
 					while(elemento.puntos.obtener(lista)){	//While que recorera la lista de listas de parejas para obtener cada lista de parejas
+						archivoS<<lista.dato.getTam()<<endl;
 						while(lista.dato.obtener(pr)){		//While que recorre la lista de parejas para obtener cada parejas
 							archivoS<<pr.clave<<endl;
 							archivoS<<pr.dato<<endl;
