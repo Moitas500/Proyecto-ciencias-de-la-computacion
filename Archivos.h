@@ -2,6 +2,7 @@
 #ifndef ARCHIVOS_H
 #define ARCHIVOS_H
 #include<iostream>
+#include<conio.h>
 #include<stdlib.h>
 #include<string>
 #include<fstream>
@@ -20,6 +21,7 @@ class Archivo{
 				}	
 		listaD<string> leerTemas();
 		void escribirTemas(listaD<string> lista);
+		listaD<cortesN> leerNotasCorte(int cedula);
 		void escribirNotasCortes(listaD<cortesN> cortesNotas, string ruta, int cedula);
 		listaD<maestro>  leerArchivoProfesor(string ruta);
 		Director leerArchivoDirector(string ruta);
@@ -27,6 +29,7 @@ class Archivo{
 		bool eliminarArchivo(string ruta);
 		void escribirArchivo(string ruta, string texto);
 		void modificarCortes(Profesor profe,int cortes);
+		
 
 };
 
@@ -110,6 +113,57 @@ void Archivo::escribirTemas(listaD<string> lista){
 		i++;
 	}	
 	archivoS.close();
+}
+
+listaD<cortesN> Archivo::leerNotasCorte(int cedula){
+	string cadena;
+	stringstream ss;
+	ss>>cedula;
+	cadena="Profesores/Cortes-"+ss.str()+".txt";
+	archivo.open(cadena.c_str(),ios::in);	//Se abre el archivo en modo lectura
+	if(archivo.fail()){
+		cout<<"No se pudo abrir el archivo"<<endl;
+		//Falta crearlo en caso de que no lo encuentre
+		exit(1);
+	}
+	int numCortes,numActividadesCorte,porcentajeActividad,numAct,numPuntosActividad,tema,valor;
+	string nombre;
+	string linea;
+	listaD<cortesN> lista;
+	getline(archivo,linea);	//Lee cedula
+	getline(archivo,linea);	//lee el numero de cortes del profesor
+	numCortes=atoi(linea.c_str());
+	for(int i=0;i<numCortes;i++){
+		getline(archivo,linea);	//lee el numero de actividades del corte
+		numActividadesCorte=atoi(linea.c_str());
+		cortesN corte(numActividadesCorte);
+		for(int x=0;x<numActividadesCorte;x++){
+			getline(archivo,nombre);	//Lee el nombre de la actividad
+			getline(archivo,linea);		//Lee el porcentaje de la actividad
+			porcentajeActividad=atoi(linea.c_str());
+			getline(archivo,linea);		//Lee el numero de esas actividades que se realizaron en el corte
+			numAct=atoi(linea.c_str());
+			listaD<listaD<int> > notas;//La lista de listas de parejas de la primera actividad
+			for(int z=0; z<numAct;z++){
+				getline(archivo,linea);		//Lee el numero de puntos que tiene esa activida
+				numPuntosActividad=atoi(linea.c_str());
+				listaD<int> parejas;
+				for(int w=0;w<numPuntosActividad;w++){
+					getline(archivo,linea);		//Lee el codigo del tema de ese punto
+					tema=atoi(linea.c_str());
+					getline(archivo,linea);		//Lee el porcentaje de ese punto
+					valor=atoi(linea.c_str());
+					parejas.insertar(tema,valor); 
+				}
+				notas.insertar(z,parejas);
+			}
+			corte.insertarActividad(nombre,porcentajeActividad,notas);
+		}
+		lista.insertar(i,corte);
+	}
+	archivo.close();		
+	return lista;	
+	
 }
 
 void Archivo::escribirNotasCortes(listaD<cortesN> cortesNotas, string ruta, int cedula){
