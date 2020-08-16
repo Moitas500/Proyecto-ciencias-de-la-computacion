@@ -11,6 +11,7 @@
 #include "Profesor.h"
 #include "estructura.h"
 #include "Trio.h"
+#include <sstream>
 using namespace std;
 
 class Archivo{
