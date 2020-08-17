@@ -352,6 +352,7 @@ void imprimirCortesNotas(listaD<cortesN> cortesNotas, Profesor profe){
 						gotoxy(80, 4 + y); cout<<"Valor "<<pr.dato;	//Impresión del porcentaje
 						y += 2;
 					}
+					gotoxy(60, 3 + y); cout << "------------------------------------";
 				}
 			}								
 		}
