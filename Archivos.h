@@ -119,7 +119,7 @@ void Archivo::escribirTemas(listaD<string> lista){
 listaD<cortesN> Archivo::leerNotasCorte(int cedula){
 	string cadena;
 	stringstream ss;
-	ss>>cedula;
+	ss<<cedula;
 	cadena="Profesores/Cortes-"+ss.str()+".txt";
 	archivo.open(cadena.c_str(),ios::in);	//Se abre el archivo en modo lectura
 	if(archivo.fail()){
@@ -185,8 +185,8 @@ void Archivo::escribirNotasCortes(listaD<cortesN> cortesNotas, string ruta, int 
 		corte=cortesNotas.obtener(i);
 		archivoS<<corte.dato.getTam()<<endl;
 			for(int i=0;i<(corte.dato.getTam());i++){	//For que recorre el arreglo obteniendo las actividades
-				elemento=corte.dato.getElemento(i);	//Se obtiene la actividad de la posición i
-				if(elemento.tipo!="NN"){		//Se hace la verificación que le comente
+				elemento=corte.dato.getElemento(i);	//Se obtiene la actividad de la posiciÃ³n i
+				if(elemento.tipo!="NN"){		//Se hace la verificaciÃ³n que le comente
 					archivoS<<elemento.tipo<<endl;
 					archivoS<<elemento.porcentaje<<endl;
 					archivoS<<elemento.puntos.getTam()<<endl;		 
