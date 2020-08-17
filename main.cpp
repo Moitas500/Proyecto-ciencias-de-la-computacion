@@ -57,6 +57,8 @@ int menuBuscarProfesor();
 int menuBuscarTema();
 //Metodo que busca a un profesor segun la cedula
 void buscarProfesor(int cedula, listaD<maestro> profes);
+//Metodo para imprimir los cortes de notas
+void imprimirCortesNotas(listaD<cortesN> cortesNotas, Profesor profe);
 
 //Funcion principal
 int main(int argc, char** argv) {
@@ -256,9 +258,9 @@ void menu_esquema(Profesor profe){
 	//Titulo del menu
 	const char *titulo = "MENU ESQUEMA";
 	//Opciones del menu
-	const char *opciones[] = {"Cambiar numero de cortes","Modificar o agregar tipo de evaluacion","Salir"};
+	const char *opciones[] = {"Cambiar numero de cortes","Ver cortes de notas","Modificar o agregar tipo de evaluacion","Salir"};
 	//Numero de opciones
-	int n = 3;
+	int n = 4;
 	Archivo file;
 	
 	do{
@@ -285,8 +287,6 @@ void menu_esquema(Profesor profe){
 				}else{
 					file.eliminarArchivo(ruta);
 					file.crearArchivo(ruta);
-					//file.eliminarArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt");
-					//file.crearArchivo("Profesores/" + profe.getNombre() + profe.getApellidos() + "Cortes.txt");
 					cout<<"Entro aqui"<<endl;
 					profe = menuListaDeCortes(profe, cortes);
 					cout<<"Salio aqui"<<endl;
@@ -296,48 +296,106 @@ void menu_esquema(Profesor profe){
 				
 				_cort = profe.getCortesNotas();
 				file.escribirNotasCortes(_cort, ruta,profe.getCedula());
-							//Aca se debe escribir el archivo de cortes/////////////////////////
-							//Este codigo imprime lo que hay en la lista de cortesNotas///////////
-							/*
-									trio elemento;	//Objeto de tipo trio que resivira las actividades en el arreglo cortesNotas
-									duo<cortesN> corte;
-									duo<int> pr;	//Elemento de tipo duo que obtendra cada una de las parejas
-									duo<listaD<int> > lista;	//Elemento de tipo duo que obtendra la lista de parejas (de la lista de listas de parejas);
-									for(int i=0;i<cortesNotas.getTam();i++){	//El for recorre la lista cortesNotas
-										cout<<endl<<endl;
-										cout<<"Para el corte "<<i+1<<endl;
-										cout<<endl;
-										corte=cortesNotas.obtener(i);
-										for(int i=0;i<(corte.dato.getTam());i++){	//For que recorre el arreglo obteniendo las actividades
-											elemento=corte.dato.getElemento(i);	//Se obtiene la actividad de la posición i
-											if(elemento.tipo!="NN"){		//Se hace la verificación que le comente
-												cout<<"Actividad "<<elemento.tipo<<endl;
-												cout<<"Porcentaje "<<elemento.porcentaje<<endl;
-												while(elemento.puntos.obtener(lista)){	//While que recorera la lista de listas de parejas para obtener cada lista de parejas
-													cout<<"Cambio de listas"<<endl;	
-													while(lista.dato.obtener(pr)){		//While que recorre la lista de parejas para obtener cada parejas
-														cout<<"Tema "<<pr.clave<<endl;	//Impresión del tema
-														cout<<"Valor "<<pr.dato<<endl;	//Impresión del porcentaje
-													}
-												}
-											}
-									
-										}
-									}
-							*/	
+
 				break;
 			}
 			
 			case 2:{
+				listaD<cortesN> cort;
+				
+				cort = file.leerNotasCorte(profe.getCedula());
+				
+				imprimirCortesNotas(cort, profe);
+				
 				break;
 			}
 			
 			case 3:{
+				break;
+			}
+			
+			case 4:{
 				repite = false;
 				break;
 			}
 		}
 	}while(repite);
+}
+
+void imprimirCortesNotas(listaD<cortesN> cortesNotas, Profesor profe){
+	system("cls");
+	
+	int tecla;
+	bool repite = true;	
+	
+	gotoxy(30,1); cout << "Cortes de notas del profesor/a: " << profe.getNombre() << " " << profe.getApellidos();
+	
+	int y = 0;
+	int x = 0;
+
+	trio elemento;	//Objeto de tipo trio que resivira las actividades en el arreglo cortesNotas
+	duo<cortesN> corte;
+	duo<int> pr;	//Elemento de tipo duo que obtendra cada una de las parejas
+	duo<listaD<int> > lista;	//Elemento de tipo duo que obtendra la lista de parejas (de la lista de listas de parejas);
+	for(int i=0;i<cortesNotas.getTam();i++){	//El for recorre la lista cortesNotas
+		gotoxy(5,3 + y); cout << "-------------------------------------------------------------------------------------------";
+		gotoxy(7,4 + y); cout<<"Corte "<<i+1<<endl;
+		corte=cortesNotas.obtener(i);
+		for(int i=0;i<(corte.dato.getTam());i++){	//For que recorre el arreglo obteniendo las actividades
+			elemento=corte.dato.getElemento(i);	//Se obtiene la actividad de la posición i
+			if(elemento.tipo!="NN"){		//Se hace la verificación que le comente
+				gotoxy(16,4 + y); cout<<"Actividad "<<elemento.tipo;
+				gotoxy(40,4 + y); cout<<"Porcentaje "<<elemento.porcentaje;
+				while(elemento.puntos.obtener(lista)){	//While que recorera la lista de listas de parejas para obtener cada lista de parejas
+					while(lista.dato.obtener(pr)){		//While que recorre la lista de parejas para obtener cada parejas
+						gotoxy(63, 4 + y); cout<<"Tema "<<pr.clave;	//Impresión del tema
+						gotoxy(80, 4 + y); cout<<"Valor "<<pr.dato;	//Impresión del porcentaje
+						y += 2;
+					}
+				}
+			}								
+		}
+	}
+	
+	for(int b = 0; b <= 6; b++){
+		for(int i = 0; i < y; i++){
+			gotoxy(5 + x,4 + i); cout << "|";
+		}
+		if(b == 1){
+			x += 10;
+		}
+		if(b == 2){
+			x += 23;
+		}
+		if(b == 3){
+			x += 20;
+		}
+		if(b == 4){
+			x += 15;
+		}
+		if(b == 5){
+			x += 22;
+		}
+	}
+	
+	gotoxy(5,3 + y); cout << "-------------------------------------------------------------------------------------------";
+	
+	gotoxy(30,5 + y); cout << "Presione ENTER para salir";
+	
+	do{
+		do
+			{
+				tecla = getch();
+			}while(tecla != TECLA_ARRIBA && tecla != TECLA_ABAJO && tecla != ENTER);	
+					
+		switch(tecla)
+		{			
+			case ENTER:
+				repite = false;
+				break;
+		}
+	}while(repite);
+	
 }
 
 Profesor menuListaDeCortes(Profesor profe, int cortes){
