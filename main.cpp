@@ -192,9 +192,19 @@ Profesor menu_registrarProfesor(){
 	cout << "\n\t Numero de clases: ";
 	cin >> numClases;
 	
-	system("pause");
+	listaD<string> nombresClases;
+	
+	for(int i=0; i<numClases; i++){
+		string nombre;
+		cout << "\n\t Nombre de la clase numero: " << i + 1 << " ";
+		cin >> nombre;
+		nombresClases.insertar(i,nombre);
+	}
 	
 	Profesor profe(nombre,contrasena,usuario,cedula,apellido,numClases,cortes);
+	profe.setNombresClases(nombresClases);
+	
+	system("pause");
 	
 	return profe;
 }
@@ -681,7 +691,7 @@ void anadirProfesorArchivo(Profesor profe){
 	string cedula = ss.str();
 	sa << profe.getNumClases();
 	string numClases = sa.str();
-	sd << profe.getCortes() << endl;
+	sd << profe.getCortes();
 	string cortes = sd.str();
 					
 	file.escribirArchivo("Profesores/listaProfesores.txt",profe.getNombre());
@@ -689,8 +699,20 @@ void anadirProfesorArchivo(Profesor profe){
 	file.escribirArchivo("Profesores/listaProfesores.txt",profe.getContrasena());			
 	file.escribirArchivo("Profesores/listaProfesores.txt",cedula);
 	file.escribirArchivo("Profesores/listaProfesores.txt",numClases);
-	file.escribirArchivo("Profesores/listaProfesores.txt",profe.getUsuario());
+	file.escribirArchivo("Profesores/listaProfesores.txt",profe.getUsuario());		
 	file.escribirArchivo("Profesores/listaProfesores.txt",cortes);
+	
+	listaD<string> nombresClases = profe.getNombresClases();
+	
+	for(int i=0; i<profe.getNumClases(); i++){
+		duo<string> dato;
+		
+		dato = nombresClases.obtener(i);
+		
+		file.escribirArchivo("Profesores/listaProfesores.txt", dato.dato);
+	}	
+	
+	file.saltoDeLinea("Profesores/listaProfesores.txt");
 }
 
 void menu_estudiantes(){

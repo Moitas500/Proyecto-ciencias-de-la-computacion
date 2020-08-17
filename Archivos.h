@@ -30,8 +30,7 @@ class Archivo{
 		bool eliminarArchivo(string ruta);
 		void escribirArchivo(string ruta, string texto);
 		void modificarCortes(Profesor profe,int cortes);
-		
-
+		void saltoDeLinea(string ruta);
 };
 
 void Archivo::modificarCortes(Profesor profe,int cortes){
@@ -268,6 +267,19 @@ bool  Archivo::eliminarArchivo(string ruta){
 		return true;
 	}
 	return false;
+}
+void Archivo::saltoDeLinea(string ruta){
+	ofstream archivo;
+	archivo.open(ruta.c_str(), ios::app);
+	
+	if(archivo.fail()){
+		system("cls");
+		cout << "No se pudo abrir el archivo" << endl;
+		system("pause");
+	}else{
+		archivo << " " << endl;
+		archivo.close();
+	}
 }
 void  Archivo::escribirArchivo(string ruta, string texto){
 	ofstream archivo;

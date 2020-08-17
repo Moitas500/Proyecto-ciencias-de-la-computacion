@@ -24,10 +24,12 @@ class Profesor : public Persona{
 		string apellidos;
 		int numClases;
 		int cortes;
+		listaD<string> nombresClases;
 		listaD<cortesN> cortesNotas;
 	//Metodos:
 	public:
 		Profesor(string _nombre, string _contrasena, string _usuario, int _cedula, string _apellidos, int _numClases, int _cortes);
+		listaD<string> getNombresClases();
 		listaD<cortesN> getCortesNotas();
 		int getCortes();
 		int getCedula();
@@ -38,6 +40,7 @@ class Profesor : public Persona{
 		void setNumClases(int _numClases);
 		void setCortes(int _cortes);
 		void setCortesNotas(listaD<cortesN> _cort);
+		void setNombresClases(listaD<string> _nombres);
 };
 
 //Contructor
@@ -46,6 +49,14 @@ Profesor::Profesor(string _nombre, string _contrasena, string _usuario, int _ced
 	this->cedula = _cedula;
 	this->numClases = _numClases;
 	this->cortes = _cortes;
+}
+//Set de la lista de los nombres de clases
+void Profesor::setNombresClases(listaD<string> _nombres){
+	this->nombresClases = _nombres;
+}
+//Get de la lista de los nombres de clases
+listaD<string> Profesor::getNombresClases(){
+	return this->nombresClases;
 }
 //Get de la lista de los cortes de notas
 listaD<cortesN> Profesor::getCortesNotas(){
