@@ -648,11 +648,30 @@ void menu_profesores(){
 			case 2:{
 				listaD<maestro> profes = file.leerArchivoProfesor("Profesores/listaProfesores.txt");
 				int opcion;
+				int numero;
+				
+				system("cls");
+				cout << "Digite el numero de clases para encontrar a los profesores: ";
+				cin >> numero;
+				
+				listaD<maestro> nuevos;
+				
+				for(int i=0; i < profes.getTam(); i++){
+					duo<maestro> maest;
+					profes.obtener(maest);
+					maestro pr = maest.dato;
+					
+					if(pr.numClases == numero){
+						nuevos.insertar(pr.cedula,pr);
+					}
+				}
+				
+				profes.reiniciarPuntero();
 				
 				do{
-					opcion = menuLista(profes);
+					opcion = menuLista(nuevos);
 					
-					if(opcion == profes.getTam()+1){
+					if(opcion == nuevos.getTam() + 1){
 						repite = false;
 					}
 					
