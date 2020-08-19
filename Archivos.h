@@ -201,7 +201,7 @@ void Archivo::escribirNotasCortes(listaD<cortesN> cortesNotas, string ruta, int 
 		}
 }
 listaD<maestro> Archivo::leerArchivoProfesor(string ruta){
-	string nombre, usuario, contrasena, apellidos, cedula, numClases, cortes;
+	string nombre, usuario, contrasena, apellidos, cedula, numClases, cortes, nombreClase;
 	int i = 1;
 	ifstream archivo(ruta.c_str());
 	listaD<maestro> profes;
@@ -223,6 +223,14 @@ listaD<maestro> Archivo::leerArchivoProfesor(string ruta){
 		maest.numClases = atoi(numClases.c_str());
 		maest.usuario = usuario;
 		maest.cortes = atoi(cortes.c_str());
+		
+		int clases = atoi(numClases.c_str());
+		
+		for(int i=0; i < clases;i++){
+			archivo >> nombreClase;
+			
+			maest.nombresClases.insertar(i,nombreClase);
+		}
 		
 		profes.insertar(maest.cedula,maest);
 		

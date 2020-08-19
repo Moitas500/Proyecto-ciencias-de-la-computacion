@@ -15,6 +15,7 @@ struct maestro{
 	int cedula;
 	int numClases;
 	int cortes;
+	listaD<string> nombresClases;
 };
 
 class Profesor : public Persona{
