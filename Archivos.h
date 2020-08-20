@@ -22,7 +22,7 @@ class Archivo{
 				}	
 		listaD<string> leerTemas();
 		void escribirTemas(listaD<string> lista);
-		listaD<cortesN> leerNotasCorte(int cedula);
+		listaD<cortesN> leerNotasCorte(string clase);
 		void escribirNotasCortes(listaD<cortesN> cortesNotas, string ruta, int cedula);
 		listaD<maestro>  leerArchivoProfesor(string ruta);
 		Director leerArchivoDirector(string ruta);
@@ -115,11 +115,9 @@ void Archivo::escribirTemas(listaD<string> lista){
 	archivoS.close();
 }
 
-listaD<cortesN> Archivo::leerNotasCorte(int cedula){
+listaD<cortesN> Archivo::leerNotasCorte(string clase){
 	string cadena;
-	stringstream ss;
-	ss<<cedula;
-	cadena="Profesores/Cortes-"+ss.str()+".txt";
+	cadena="Profesores/Cortes-"+clase+".txt";
 	archivo.open(cadena.c_str(),ios::in);	//Se abre el archivo en modo lectura
 	if(archivo.fail()){
 		cout<<"No se pudo abrir el archivo"<<endl;

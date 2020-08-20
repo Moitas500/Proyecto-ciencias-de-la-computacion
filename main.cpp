@@ -365,10 +365,32 @@ void menu_esquema(Profesor profe){
 			
 			case 2:{
 				listaD<cortesN> cort;
+				listaD<string> nombresClases = profe.getNombresClases();
+				string nomclase;
+				bool claseEncontrada=false;
 				
-				cort = file.leerNotasCorte(profe.getCedula());
+				system("cls");
+				cout << "Digite el curso al cual quiere ver su corte de notas: ";
+				cin >> nomclase;
 				
-				imprimirCortesNotas(cort, profe);
+				for(int i=0; i<nombresClases.getTam();i++){
+					if(nombresClases.obtener(i).dato==nomclase){
+						i=profe.getNumClases();
+						claseEncontrada=true;
+					}
+				}
+				
+				if(claseEncontrada){
+					cort = file.leerNotasCorte(nomclase);
+				
+					imprimirCortesNotas(cort, profe);
+				}else{
+					system("cls");
+					
+					cout << "La clase no pudo ser encontrada" << endl;
+					
+					system("pause");
+				}
 				
 				break;
 			}
