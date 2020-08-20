@@ -285,16 +285,17 @@ void menu_esquema(Profesor profe){
 				/*clases.insertar(1,"CC132");
 				clases.insertar(2,"CC128");
 				profe.setNombresClases(clases);*/
-				//cambiar insercion de profesores	
+				//cambiar insercion de profesores
+				//profe.getNombresClases().obtenerTodos();	
 				listaD<string> nombresClases= profe.getNombresClases();		
-				nombresClases.obtenerTodos();
+				//nombresClases.obtenerTodos();
 			 	bool claseEncontrada=false;
 				string nomclase;
 				
 				cout << "-------"+nombresClases.obtener(0).dato<<endl;
 				cout << "Digite el nombre de la clase de la que desea cambiar el esquema de cortes: ";
 				cin >> nomclase;
-				for(int i=0; i<1;i++){
+				for(int i=0; i<nombresClases.getTam();i++){
 					cout << "-------"+nombresClases.obtener(i).dato<<endl;
 					if(nombresClases.obtener(i).dato==nomclase){
 						i=profe.getNumClases();
@@ -312,6 +313,9 @@ void menu_esquema(Profesor profe){
 						profe = menuListaDeCortes(profe, profe.getCortes());
 						cout<<"Salio aqui"<<endl;
 					}
+					listaD<cortesN> _cort;
+				_cort = profe.getCortesNotas();
+				file.escribirNotasCortes(_cort, ruta,profe.getCedula());
 				}else{
 					cout << "clase no encontrada";
 					repite=false;

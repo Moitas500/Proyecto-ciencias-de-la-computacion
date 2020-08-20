@@ -1,6 +1,2 @@
-julian martinez 123 1 2 julian 0
-
-pedro alvarado 234 2 2 pedro 3
-
-juan rosero 123 3 2 juan 3
-
+juli perez 123 9 2 juli 3 CC132 CC281  
+Felipe Rodriguez 123 1 2 pipe 3 CC111 CC214  
