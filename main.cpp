@@ -138,6 +138,7 @@ void menu_seleccion(){
 						
 						if(m.usuario == per.getUsuario() && m.contrasena == per.getContrasena() && m.cedula == cedula){
 							Profesor profe(m.nombre,m.contrasena,m.usuario,m.cedula,m.apellidos,m.numClases,m.cortes);
+							profe.setNombresClases(m.nombresClases);
 							menu_profesor(profe);
 						}else{
 							system("cls");
@@ -279,13 +280,61 @@ void menu_esquema(Profesor profe){
 		switch(opcion){
 			case 1:{	
 				system("cls");
-				int cortes;
+				listaD<string> clases;
+				//cambiar insercion de profesores
+				/*clases.insertar(1,"CC132");
+				clases.insertar(2,"CC128");
+				profe.setNombresClases(clases);*/
+				//cambiar insercion de profesores	
+				listaD<string> nombresClases= profe.getNombresClases();		
+				nombresClases.obtenerTodos();
+			 	bool claseEncontrada=false;
+				string nomclase;
+				
+				cout << "-------"+nombresClases.obtener(0).dato<<endl;
+				cout << "Digite el nombre de la clase de la que desea cambiar el esquema de cortes: ";
+				cin >> nomclase;
+				for(int i=0; i<1;i++){
+					cout << "-------"+nombresClases.obtener(i).dato<<endl;
+					if(nombresClases.obtener(i).dato==nomclase){
+						i=profe.getNumClases();
+						claseEncontrada=true;
+					}
+				}
+				if(claseEncontrada){
+					string ruta = "Profesores/Cortes-"+ nomclase +".txt";
+					if(file.crearArchivo(ruta)){
+						profe = menuListaDeCortes(profe, profe.getCortes());
+					}else{
+						file.eliminarArchivo(ruta);
+						file.crearArchivo(ruta);
+						cout<<"Entro aqui"<<endl;
+						profe = menuListaDeCortes(profe, profe.getCortes());
+						cout<<"Salio aqui"<<endl;
+					}
+				}else{
+					cout << "clase no encontrada";
+					repite=false;
+				}
+				
+			/*	do{
+					cout <<clase.dato<<endl;
+					if(!nombresClases.obtener(clase)){
+						cout << "La  clase no existe en el registro del profesor"<<endl;
+						cout << "Digite el nombre de la clase de la que desea cambiar el esquema de cortes: ";
+						cin >> nomclase;
+					}
+				}while(clase.dato!=nomclase);
+				nombresClases.reiniciarPuntero();*/
+				
+				/*int cortes;
 			
 				listaD<maestro> profes = file.leerArchivoProfesor("Profesores/listaProfesores.txt");
 				
 				cout << "Sen@r " << profe.getNombre() << " " << profe.getApellidos() << " " <<  "actualmente usted tiene: " << profe.getCortes() << " cortes." << endl;
 				
 				cout << "Digite la cantidad de cortes que desea realizar: ";
+				
 				cin >> cortes;
 				
 				file.modificarCortes(profe, cortes);
@@ -306,7 +355,7 @@ void menu_esquema(Profesor profe){
 				
 				_cort = profe.getCortesNotas();
 				file.escribirNotasCortes(_cort, ruta,profe.getCedula());
-
+*/
 				break;
 			}
 			

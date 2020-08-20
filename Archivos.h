@@ -233,6 +233,8 @@ listaD<maestro> Archivo::leerArchivoProfesor(string ruta){
 			maest.nombresClases.insertar(i,nombreClase);
 		}
 		
+		maest.nombresClases.obtenerTodos();
+		system("pause");
 		profes.insertar(maest.cedula,maest);
 		
 	}
