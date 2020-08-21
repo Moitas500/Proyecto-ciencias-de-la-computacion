@@ -201,7 +201,7 @@ Profesor menu_registrarProfesor(){
 		cout << "\n\t Nombre de la clase numero: " << i + 1 << " ";
 		cin >> nombre;
 		
-		string ruta = nombre;
+		string ruta = "./clases/" + nombre;
 		
 		mkdir(ruta.c_str());
 		
