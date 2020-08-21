@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <stdlib.h>
+#include <direct.h>
 
 #include "Director.h"
 #include "Profesor.h"
@@ -199,6 +200,11 @@ Profesor menu_registrarProfesor(){
 		string nombre;
 		cout << "\n\t Nombre de la clase numero: " << i + 1 << " ";
 		cin >> nombre;
+		
+		string ruta = nombre;
+		
+		mkdir(ruta.c_str());
+		
 		nombresClases.insertar(i,nombre);
 	}
 	
