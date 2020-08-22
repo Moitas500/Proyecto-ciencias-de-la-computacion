@@ -14,6 +14,7 @@ class Persona{
 	//Metodos
 	public:
 		Persona(string _nombre,string _contrasena,string _usuario);
+		Persona();
 		void setNombre(string _nombre);
 		void setContrasena(string _contrasena);
 		void setUsuario(string _usuario);
@@ -21,6 +22,8 @@ class Persona{
 		string getContrasena();
 		string getUsuario();
 };
+Persona::Persona(){
+}
 //Contructor
 Persona::Persona(string _nombre, string _contrasena, string _usuario){
 	this->nombre = _nombre;

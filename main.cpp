@@ -12,6 +12,7 @@
 #include "Archivos.h"
 #include "estructura.h"
 #include "CortesNotas.h"
+#include "Lector.h"
 
 #define TECLA_ARRIBA 72
 #define TECLA_ABAJO 80
@@ -818,10 +819,11 @@ void anadirProfesorArchivo(Profesor profe){
 void menu_estudiantes(){
 	bool repite = true;
 	int opcion;
+	Archivo file;
 	//Titulo del menu
 	const char *titulo = "MENU ESTUDIANTES";
 	//Opciones del menu
-	const char *opciones[] = {"Buscar estudiante","Salir"};
+	const char *opciones[] = {"Consultar promedio de un estudiante","Salir"};
 	//Numero de opciones
 	int n = 2;
 	
@@ -830,9 +832,65 @@ void menu_estudiantes(){
 		
 		//Alternativas
 		switch(opcion){
-			case 1:
-				cout << "hola";
+			case 1:{
+				int cedula;
+				string nombreClase;
+				string nombreEstudiante;
+				string apellidoEstudiante;
+				bool encontrado = false;
+				
+				system("cls");
+				cout << "Digite la cedula del profesor de la clase: ";
+				cin >> cedula;
+				
+				cout << "Digite el nombre de la clase del estudiante: ";
+				cin >> nombreClase;
+				
+				cout << "Digite el nombre del estudiante: ";
+				cin >> nombreEstudiante;
+				
+				cout << "Digite el apellido del estudiante: ";
+				cin >> apellidoEstudiante;
+				
+				lector h;
+				
+				listaD<string> nombres = h.leerArchivos(nombreClase);
+				
+				for(int i=0; i<nombres.getTam(); i++){
+					duo<string> nombreArchivo;
+					
+					nombres.obtener(nombreArchivo);
+					system("cls");
+					cout << nombreArchivo.dato << endl;
+					system("pause");
+					
+					//Aqui tiene que ir lo de el numero de puntos de la actividad que solo sabe juan david xd
+					listaD<Estudiante> estudiantes = file.getEstudiantesCurso(nombreClase, nombreArchivo.dato, 3);
+					
+					duo<Estudiante> est;
+					Estudiante s;
+					
+					do{
+						estudiantes.obtener(est);
+						
+						s = est.dato;
+						
+						if(nombreEstudiante == s.getNombre() && apellidoEstudiante == s.getApellidos()){
+							encontrado = true;
+						}else{
+							system("cls");
+							cout << "El estudiante no pudo ser encontrado";
+							system("pause");
+						}	
+					}while(!encontrado);
+					
+					estudiantes.reiniciarPuntero();
+				}
+				
+				//Aqui se llama a la funcion de Juli para calcular el promedio del estudiante
+				
 				break;
+			}
 				
 			case 2:
 				repite = false;

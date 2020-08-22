@@ -1,0 +1,4 @@
+1
+Maria Rodriguez 4.0 2.5 4.0
+Juan Perez 3.2 2.3 4.6
+Jose Gonzales 1.5 5.0 4.2
