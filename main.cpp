@@ -852,40 +852,7 @@ void menu_estudiantes(){
 				cout << "Digite el apellido del estudiante: ";
 				cin >> apellidoEstudiante;
 				
-				lector h;
-				
-				listaD<string> nombres = h.leerArchivos(nombreClase);
-				
-				for(int i=0; i<nombres.getTam(); i++){
-					duo<string> nombreArchivo;
-					
-					nombres.obtener(nombreArchivo);
-					system("cls");
-					cout << nombreArchivo.dato << endl;
-					system("pause");
-					
-					//Aqui tiene que ir lo de el numero de puntos de la actividad que solo sabe juan david xd
-					listaD<Estudiante> estudiantes = file.getEstudiantesCurso(nombreClase, nombreArchivo.dato, 3);
-					
-					duo<Estudiante> est;
-					Estudiante s;
-					
-					do{
-						estudiantes.obtener(est);
-						
-						s = est.dato;
-						
-						if(nombreEstudiante == s.getNombre() && apellidoEstudiante == s.getApellidos()){
-							encontrado = true;
-						}else{
-							system("cls");
-							cout << "El estudiante no pudo ser encontrado";
-							system("pause");
-						}	
-					}while(!encontrado);
-					
-					estudiantes.reiniciarPuntero();
-				}
+				file.buscarEstudianteNotas(nombreClase,nombreEstudiante,apellidoEstudiante);
 				
 				//Aqui se llama a la funcion de Juli para calcular el promedio del estudiante
 				

@@ -9,6 +9,7 @@
 #include "listaD.h"
 #include "Director.h"
 #include "Profesor.h"
+#include "Lector.h"
 #include "estructura.h"
 #include "Estudiante.h"
 #include "Trio.h"
@@ -33,7 +34,104 @@ class Archivo{
 		void modificarCortes(Profesor profe,int cortes);
 		void saltoDeLinea(string ruta);
 		listaD<Estudiante> getEstudiantesCurso(string nombreClase,string nombreArchivo, int puntosActividad);
+		void buscarEstudianteNotas(string nombreClase, string nombreEstudiante, string apellidoEstudiante);
 };
+
+void Archivo::buscarEstudianteNotas(string nombreClase, string nombreEstudiante, string apellidoEstudiante){
+	Archivo file;
+	string cadena;
+	cadena="Profesores/Cortes-"+nombreClase+".txt";
+	bool encontrado = false;
+	archivo.open(cadena.c_str(),ios::in);	//Se abre el archivo en modo lectura
+	int a = 0;
+	if(archivo.fail()){
+		cout<<"No se pudo abrir el archivo"<<endl;
+		//Falta crearlo en caso de que no lo encuentre
+		exit(1);
+	}
+	int numCortes,numActividadesCorte,porcentajeActividad,numAct,tema,valor;
+	int numPuntosActividad1 = 0;
+	listaD<int> numPuntosActividad;
+	string nombre;
+	string linea;
+	listaD<cortesN> lista;
+	getline(archivo,linea);	//Lee cedula
+	getline(archivo,linea);	//lee el numero de cortes del profesor
+	numCortes=atoi(linea.c_str());
+	for(int i=0;i<numCortes;i++){
+		getline(archivo,linea);	//lee el numero de actividades del corte
+		numActividadesCorte=atoi(linea.c_str());
+		cortesN corte(numActividadesCorte);
+		for(int x=0;x<numActividadesCorte;x++){
+			getline(archivo,nombre);	//Lee el nombre de la actividad
+			getline(archivo,linea);		//Lee el porcentaje de la actividad
+			porcentajeActividad=atoi(linea.c_str());
+			getline(archivo,linea);		//Lee el numero de esas actividades que se realizaron en el corte
+			numAct=atoi(linea.c_str());
+			listaD<listaD<int> > notas;//La lista de listas de parejas de la primera actividad
+			for(int z=0; z<numAct;z++){
+				getline(archivo,linea);		//Lee el numero de puntos que tiene esa activida
+				numPuntosActividad.insertar(a, atoi(linea.c_str()));
+				numPuntosActividad1 = atoi(linea.c_str());
+				listaD<int> parejas;
+				a++;
+				for(int w=0;w<numPuntosActividad1;w++){
+					getline(archivo,linea);		//Lee el codigo del tema de ese punto
+					tema=atoi(linea.c_str());
+					getline(archivo,linea);		//Lee el porcentaje de ese punto
+					valor=atoi(linea.c_str());
+					parejas.insertar(tema,valor); 
+				}
+				notas.insertar(z,parejas);
+			}
+			corte.insertarActividad(nombre,porcentajeActividad,notas);
+		}
+		lista.insertar(i,corte);
+	}
+	archivo.close();
+	
+	lector h;
+				
+	listaD<string> nombres = h.leerArchivos(nombreClase);
+		
+	for(int i=0; i<numPuntosActividad.getTam();i++){
+		duo<int> l;
+		numPuntosActividad.obtener(l);
+		
+			duo<string> nombreArchivo;
+						
+			nombres.obtener(nombreArchivo);
+			system("cls");
+			cout << nombreArchivo.dato << endl;
+			system("pause");
+						
+			listaD<Estudiante> estudiantes = file.getEstudiantesCurso(nombreClase, nombreArchivo.dato, l.dato);
+						
+			duo<Estudiante> est;
+			Estudiante s;
+						
+			do{
+				estudiantes.obtener(est);
+							
+				s = est.dato;
+							
+				if(nombreEstudiante == s.getNombre() && apellidoEstudiante == s.getApellidos()){
+					encontrado = true;
+					system("cls");
+					s.getNotas().obtenerTodos();
+					system("pause");
+					}else{
+						system("cls");
+						cout << "El estudiante no pudo ser encontrado";
+						system("pause");
+					}	
+			}while(!encontrado);
+						
+			estudiantes.reiniciarPuntero();
+			}
+		
+		numPuntosActividad.reiniciarPuntero();	
+}	
 
 void Archivo::modificarCortes(Profesor profe,int cortes){
 	listaD<maestro> maest = Archivo::leerArchivoProfesor("Profesores/listaProfesores.txt");
@@ -163,7 +261,6 @@ listaD<cortesN> Archivo::leerNotasCorte(string clase){
 	}
 	archivo.close();		
 	return lista;	
-	
 }
 
 void Archivo::escribirNotasCortes(listaD<cortesN> cortesNotas, string ruta, int cedula){
