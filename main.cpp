@@ -5,12 +5,15 @@
 #include <fstream>
 #include <sstream>
 #include <stdlib.h>
+#include <direct.h>
 
 #include "Director.h"
 #include "Profesor.h"
 #include "Archivos.h"
 #include "estructura.h"
 #include "CortesNotas.h"
+#include "Lector.h"
+#include "promedio.h"
 
 #define TECLA_ARRIBA 72
 #define TECLA_ABAJO 80
@@ -199,6 +202,11 @@ Profesor menu_registrarProfesor(){
 		string nombre;
 		cout << "\n\t Nombre de la clase numero: " << i + 1 << " ";
 		cin >> nombre;
+		
+		string ruta = "./clases/" + nombre;
+		
+		mkdir(ruta.c_str());
+		
 		nombresClases.insertar(i,nombre);
 	}
 	
@@ -812,10 +820,11 @@ void anadirProfesorArchivo(Profesor profe){
 void menu_estudiantes(){
 	bool repite = true;
 	int opcion;
+	Archivo file;
 	//Titulo del menu
 	const char *titulo = "MENU ESTUDIANTES";
 	//Opciones del menu
-	const char *opciones[] = {"Buscar estudiante","Salir"};
+	const char *opciones[] = {"Consultar promedio de un estudiante","Salir"};
 	//Numero de opciones
 	int n = 2;
 	
@@ -824,9 +833,36 @@ void menu_estudiantes(){
 		
 		//Alternativas
 		switch(opcion){
-			case 1:
-				cout << "hola";
+			case 1:{
+				int cedula;
+				string nombreClase;
+				string nombreEstudiante;
+				string apellidoEstudiante;
+				bool encontrado = false;
+				
+				system("cls");
+				cout << "Digite la cedula del profesor de la clase: ";
+				cin >> cedula;
+				
+				cout << "Digite el nombre de la clase del estudiante: ";
+				cin >> nombreClase;
+				
+				cout << "Digite el nombre del estudiante: ";
+				cin >> nombreEstudiante;
+				
+				cout << "Digite el apellido del estudiante: ";
+				cin >> apellidoEstudiante;
+				
+				//Toca arreglar esto para que se vea bien
+				promedio p;
+				float pr=p.promedioEstudiante(cedula,nombreClase,nombreEstudiante,apellidoEstudiante);
+				cout<<"El promedio de "<<nombreEstudiante<<" "<<apellidoEstudiante<<" es "<<pr<<endl;
+				system("pause");
+				
+				//Aqui se llama a la funcion de Juli para calcular el promedio del estudiante
+				
 				break;
+			}
 				
 			case 2:
 				repite = false;

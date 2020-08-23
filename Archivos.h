@@ -6,11 +6,13 @@
 #include<stdlib.h>
 #include<string>
 #include<fstream>
+#include<sstream>
 #include "listaD.h"
 #include "Director.h"
 #include "Profesor.h"
 #include "estructura.h"
 #include "Trio.h"
+#include "Estudiante.h"
 #include <sstream>
 using namespace std;
 
@@ -30,7 +32,8 @@ class Archivo{
 		bool eliminarArchivo(string ruta);
 		void escribirArchivo(string ruta, string texto);
 		void modificarCortes(Profesor profe,int cortes);
-		void saltoDeLinea(string ruta);
+		void saltoDeLinea(string ruta);	//<-- que es eso de salto de linea?
+		listaD<Estudiante> getEstudiantesCurso(string nombreClase,string nombreArchivo, int puntosActividad);
 };
 
 void Archivo::modificarCortes(Profesor profe,int cortes){
@@ -299,5 +302,42 @@ void  Archivo::escribirArchivo(string ruta, string texto){
 		archivo << texto + " ";
 		archivo.close();
 	}
+}
+listaD<Estudiante> Archivo::getEstudiantesCurso(string nombreClase,string nombreArchivo, int puntosActividad){
+	string ruta = "clases/" + nombreClase + "/" + nombreArchivo;
+	
+	string algoAhi, nombre, apellido, nota;
+	ifstream archivo(ruta.c_str());
+	listaD<Estudiante> estudiantes;	
+	
+	int a=0;
+	
+	archivo >> algoAhi; //Lee la cosa esa que hay al principio xd
+	
+	while(!archivo.eof()){
+		archivo >> nombre; //Leer nombre
+		archivo >> apellido; //Leer apellido
+		
+		listaD<float> notas;
+		
+		for(int i=0; i<puntosActividad; i++){ //Lee las notas y las agrega a la lista de notas del estudiante
+			archivo >> nota;
+			float asd;
+			
+			if(istringstream(nota) >> asd){
+				notas.insertar(i,asd);
+			}
+		}
+		
+		Estudiante alumno(nombre, " ", " ", apellido, notas);
+		
+		estudiantes.insertar(a,alumno);
+		
+		a++;
+	}
+	
+	archivo.close();
+	
+	return estudiantes;
 }
 #endif

@@ -29,7 +29,11 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=1
 CompilerSettings=0000000000000000001000000
+<<<<<<< HEAD
 UnitCount=13
+=======
+UnitCount=14
+>>>>>>> 6d9bb931fd60be739610063b521a6842e5f3ad4e
 
 [VersionInfo]
 Major=1
@@ -91,16 +95,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit6]
-FileName=estructura.h
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit7]
 FileName=listaD.h
 CompileCpp=1
 Folder=
@@ -110,17 +104,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit5]
-FileName=Archivos.h
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit8]
+[Unit7]
 FileName=CortesNotas.h
 CompileCpp=1
 Folder=
@@ -130,7 +114,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit9]
+[Unit8]
 FileName=Trio.h
 CompileCpp=1
 Folder=
@@ -140,7 +124,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit10]
+[Unit9]
 FileName=Estudiante.h
 CompileCpp=1
 Folder=
@@ -150,7 +134,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit11]
+[Unit10]
 FileName=arbolB.h
 CompileCpp=1
 Folder=
@@ -160,8 +144,11 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit12]
-FileName=pila.h
+[Unit13]
+FileName=clase.h
+=======
+FileName=Lector.h
+>>>>>>> 6d9bb931fd60be739610063b521a6842e5f3ad4e
 CompileCpp=1
 Folder=
 Compile=1
@@ -170,7 +157,37 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit13]
+[Unit14]
+FileName=promedio.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit5]
+FileName=estructura.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit11]
+FileName=Archivos.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit12]
 FileName=clase.h
 CompileCpp=1
 Folder=

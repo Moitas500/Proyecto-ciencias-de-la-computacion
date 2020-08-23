@@ -51,6 +51,7 @@ void cortesN::insertarActividad(string tipoE,int porcentajeP, listaD<listaD<int>
 			aux.porcentaje=porcentajeP;
 			aux.puntos=puntosP;
 			notas[posActual]=aux;
+			tam++;
 		} else {
 			cout<<"El arreglo esta lleno"<<endl;
 		}
@@ -61,6 +62,7 @@ void cortesN:: eliminarActividad(int posicion){
 	aux.tipo="NN";
 	if(posicion<tam && posicion>=0){
 		notas[posicion]=aux;
+		tam--;
 	} else {
 		cout<<"La clave no se encuentra en el arreglo"<<endl;
 	}
