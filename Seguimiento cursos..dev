@@ -32,7 +32,7 @@ CompilerSettings=0000000000000000001000000
 <<<<<<< HEAD
 UnitCount=13
 =======
-UnitCount=14
+UnitCount=13
 >>>>>>> 6d9bb931fd60be739610063b521a6842e5f3ad4e
 
 [VersionInfo]
@@ -175,7 +175,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit13]
-FileName=..\..\..\..\..\..\Documents\Pruebas\CortesNotas.h
+FileName=promedio.h
 CompileCpp=1
 Folder=
 Compile=1

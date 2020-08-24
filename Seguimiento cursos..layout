@@ -1,11 +1,11 @@
 [Editors]
 <<<<<<< HEAD
-Order=0,7,9,10,13
+Order=0,7,9,10
 Focused=0
 [Editor_0]
-CursorCol=64
-CursorRow=869
-TopLine=852
+CursorCol=38
+CursorRow=759
+TopLine=733
 =======
 Order=0,2,3,4,6,5,8,7,1,9,10
 Focused=0

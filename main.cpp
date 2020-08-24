@@ -204,7 +204,9 @@ Profesor menu_registrarProfesor(){
 		cin >> nombre;
 		
 		string ruta = "./clases/" + nombre;
+		string ruta2 = "./parciales/" + nombre;
 		
+		mkdir(ruta2.c_str());
 		mkdir(ruta.c_str());
 		
 		nombresClases.insertar(i,nombre);
@@ -745,6 +747,8 @@ void menu_profesores(){
 					maestro pr = maest.dato;
 					
 					if(pr.numClases == numero){
+						cout << pr.numClases;
+						system("pause");
 						nuevos.insertar(pr.cedula,pr);
 					}
 				}
@@ -754,7 +758,7 @@ void menu_profesores(){
 				do{
 					opcion = menuLista(nuevos);
 					
-					if(opcion == nuevos.getTam() + 1){
+					if(opcion == nuevos.getTam() + 2){
 						repite = false;
 					}
 					
@@ -980,7 +984,7 @@ int menuLista(listaD<maestro> profes){		//Preguntarle a camilo para que sirve es
 					
 		int i = 0;
 
-		for((i=1);(i<profes.getTam());(i++))
+		for((i=1);(i<=profes.getTam());(i++))
 	    {
 	    	profes.obtener(mast); 
 	    	gotoxy(10, 4 + i); cout << i << ") " << "Cedula: " << mast.dato.cedula << " Nombre: " << mast.dato.apellidos << " " << mast.dato.nombre << " Numero de clases: " << mast.dato.numClases;
@@ -1001,14 +1005,14 @@ int menuLista(listaD<maestro> profes){		//Preguntarle a camilo para que sirve es
 				
 				if (opcionSeleccionada < 2)
 				{
-					opcionSeleccionada = profes.getTam() + 1;
+					opcionSeleccionada = profes.getTam() + 2;
 				}
 				break;
 			
 			case TECLA_ABAJO:
 				opcionSeleccionada ++;
 				
-				if (opcionSeleccionada > profes.getTam() + 1)
+				if (opcionSeleccionada > profes.getTam() + 2)
 				{
 					opcionSeleccionada = 2;
 				}

@@ -185,7 +185,7 @@ while(aux.obtener(nombreA)){
 		stringstream ss;
 		stringstream notastr;
 		ss << i;
-		string ruta ="parciales/parcial"+ss.str()+".txt";
+		string ruta ="parciales/" + nombreClase +"/parcial"+ss.str()+".txt";
 		file.crearArchivo(ruta);
 		for(int j=1;j<=notasAux.getTam();j++){
 			stringstream notastr;
