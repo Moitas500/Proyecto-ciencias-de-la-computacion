@@ -177,6 +177,7 @@ void Archivo::escribirNotasCortes(listaD<cortesN> cortesNotas, string ruta, int 
 		//Falta crearlo en caso de que no lo encuentre
 		exit(1);
 	}
+	
 	trio elemento;	//Objeto de tipo trio que resivira las actividades en el arreglo cortesNotas
 	duo<cortesN> corte;
 	duo<int> pr;	//Elemento de tipo duo que obtendra cada una de las parejas
