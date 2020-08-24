@@ -244,9 +244,9 @@ void menu_profesor(Profesor profe){
 	//Titulo del menu
 	const char *titulo = "MENU PROFESOR";
 	//Opciones del menu
-	const char *opciones[] = {"Consultar temas","Esquema de notas","Consultar estudiantes","Salir"};
+	const char *opciones[] = {"Consultar temas","Esquema de notas","Salir"};
 	//Numero de opciones
-	int n = 4;
+	int n = 3;
 	
 	do{
 		opcion = menu(titulo, opciones, n);		
@@ -262,12 +262,8 @@ void menu_profesor(Profesor profe){
 				break;
 				
 			case 3:
-				menu_estudiantes();
-				break;
-				
-			case 4:
 				repite = false;
-				break; 		
+				break;	
 		}
 		
 	}while(repite);
@@ -279,9 +275,9 @@ void menu_esquema(Profesor profe){
 	//Titulo del menu
 	const char *titulo = "MENU ESQUEMA";
 	//Opciones del menu
-	const char *opciones[] = {"Cambiar numero de cortes","Ver cortes de notas","Modificar o agregar tipo de evaluacion","Salir"};
+	const char *opciones[] = {"Cambiar esquema","Ver cortes de notas","Salir"};
 	//Numero de opciones
-	int n = 4;
+	int n = 3;
 	Archivo file;
 	
 	do{
@@ -360,10 +356,6 @@ void menu_esquema(Profesor profe){
 			}
 			
 			case 3:{
-				break;
-			}
-			
-			case 4:{
 				repite = false;
 				break;
 			}
