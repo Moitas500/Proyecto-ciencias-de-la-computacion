@@ -291,14 +291,9 @@ void menu_esquema(Profesor profe){
 			case 1:{	
 				system("cls");
 				listaD<string> clases;
-				//cambiar insercion de profesores
-				/*clases.insertar(1,"CC132");
-				clases.insertar(2,"CC128");
-				profe.setNombresClases(clases);*/
-				//cambiar insercion de profesores
-				//profe.getNombresClases().obtenerTodos();	
-				listaD<string> nombresClases= profe.getNombresClases();		
-				//nombresClases.obtenerTodos();
+
+				listaD<string> nombresClases = profe.getNombresClases();		
+
 			 	bool claseEncontrada=false;
 				string nomclase;
 				
@@ -319,57 +314,16 @@ void menu_esquema(Profesor profe){
 					}else{
 						file.eliminarArchivo(ruta);
 						file.crearArchivo(ruta);
-						cout<<"Entro aqui"<<endl;
 						profe = menuListaDeCortes(profe, profe.getCortes());
-						cout<<"Salio aqui"<<endl;
 					}
-					listaD<cortesN> _cort;
+				listaD<cortesN> _cort;
 				_cort = profe.getCortesNotas();
 				file.escribirNotasCortes(_cort, ruta,profe.getCedula());
 				}else{
 					cout << "clase no encontrada";
 					repite=false;
 				}
-				
-			/*	do{
-					cout <<clase.dato<<endl;
-					if(!nombresClases.obtener(clase)){
-						cout << "La  clase no existe en el registro del profesor"<<endl;
-						cout << "Digite el nombre de la clase de la que desea cambiar el esquema de cortes: ";
-						cin >> nomclase;
-					}
-				}while(clase.dato!=nomclase);
-				nombresClases.reiniciarPuntero();*/
-				
-				/*int cortes;
-			
-				listaD<maestro> profes = file.leerArchivoProfesor("Profesores/listaProfesores.txt");
-				
-				cout << "Sen@r " << profe.getNombre() << " " << profe.getApellidos() << " " <<  "actualmente usted tiene: " << profe.getCortes() << " cortes." << endl;
-				
-				cout << "Digite la cantidad de cortes que desea realizar: ";
-				
-				cin >> cortes;
-				
-				file.modificarCortes(profe, cortes);
-				stringstream ss2;
-				ss2 << profe.getCedula();
-				string ruta = "Profesores/Cortes-"+ ss2.str() +".txt";
-				if(file.crearArchivo(ruta)){
-					profe = menuListaDeCortes(profe, cortes);
-				}else{
-					file.eliminarArchivo(ruta);
-					file.crearArchivo(ruta);
-					cout<<"Entro aqui"<<endl;
-					profe = menuListaDeCortes(profe, cortes);
-					cout<<"Salio aqui"<<endl;
-				}
-
-				listaD<cortesN> _cort;
-				
-				_cort = profe.getCortesNotas();
-				file.escribirNotasCortes(_cort, ruta,profe.getCedula());
-*/
+	
 				break;
 			}
 			
@@ -436,7 +390,7 @@ void imprimirCortesNotas(listaD<cortesN> cortesNotas, Profesor profe){
 		gotoxy(5,3 + y); cout << "-------------------------------------------------------------------------------------------";
 		gotoxy(7,4 + y); cout<<"Corte "<<i+1<<endl;
 		corte=cortesNotas.obtener(i);
-		for(int i=0;i<(corte.dato.getTam());i++){	//For que recorre el arreglo obteniendo las actividades
+		for(int i=0;i<(corte.dato.getTam())-1;i++){	//For que recorre el arreglo obteniendo las actividades
 			elemento=corte.dato.getElemento(i);	//Se obtiene la actividad de la posición i
 			if(elemento.tipo!="NN"){		//Se hace la verificación que le comente
 				gotoxy(16,4 + y); cout<<"Actividad "<<elemento.tipo;
@@ -511,12 +465,12 @@ Profesor menuListaDeCortes(Profesor profe, int cortes){
 		cout<<"Ingrese el numero de Actividades el el corte "<<i+1<<endl;
 		cin>>numActividades;
 		cortesN corte(numActividades);
-		for(int x=1;x<=numActividades;x++){
-			cout<<"Ingrese nombre de la actividad "<<(x)<<endl;
+		for(int x=0;x<numActividades;x++){
+			cout<<"Ingrese nombre de la actividad "<<(x+1)<<endl;
 			cin>>tipo;
-			cout<<"Ingrese el porcentaje de la activdad "<<(x)<<endl;
+			cout<<"Ingrese el porcentaje de la activdad "<<(x+1)<<endl;
 			cin>>porcentajeA;
-			cout<<"Ingrese el numero de estas actividades en el corte "<<(x)<<endl;
+			cout<<"Ingrese el numero de estas actividades en el corte "<<(x+1)<<endl;
 			cin>>numA;
 			listaD<listaD<int> > notas;//La lista de listas de parejas de la primera actividad
 			for(int y=0;y<numA;y++){

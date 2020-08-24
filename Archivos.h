@@ -186,9 +186,10 @@ void Archivo::escribirNotasCortes(listaD<cortesN> cortesNotas, string ruta, int 
 	archivoS<<cortesNotas.getTam()<<endl;
 	for(int i=0;i<cortesNotas.getTam();i++){	//El for recorre la lista cortesNotas
 		corte=cortesNotas.obtener(i);
-		archivoS<<corte.dato.getTam()<<endl;
-			for(int i=0;i<(corte.dato.getTam());i++){	//For que recorre el arreglo obteniendo las actividades
-				elemento=corte.dato.getElemento(i);	//Se obtiene la actividad de la posición i
+		cortesN s = corte.dato;
+		archivoS<<s.getTam() - 1<<endl;
+			for(int j=0;j<(corte.dato.getTam())-1;j++){	//For que recorre el arreglo obteniendo las actividades
+				elemento=corte.dato.getElemento(j);	//Se obtiene la actividad de la posición i
 				if(elemento.tipo!="NN"){		//Se hace la verificación que le comente
 					archivoS<<elemento.tipo<<endl;
 					archivoS<<elemento.porcentaje<<endl;
@@ -209,7 +210,7 @@ listaD<maestro> Archivo::leerArchivoProfesor(string ruta){
 	string nombre, usuario, contrasena, apellidos, cedula, numClases, cortes;
 	ifstream archivo(ruta.c_str());
 	listaD<maestro> profes;
-	
+		
 	while(!archivo.eof()){
 		archivo >> nombre;
 		archivo >> apellidos;
@@ -230,19 +231,22 @@ listaD<maestro> Archivo::leerArchivoProfesor(string ruta){
 		
 		int clases = atoi(numClases.c_str());
 		
+		listaD<string> nombres;
+		
 		for(int i=0; i < clases;i++){
 			string nombreClase;
 			archivo >> nombreClase;
 		
-			maest.nombresClases.insertar(i,nombreClase);
+			nombres.insertar(i, nombreClase);
 		}
 		
-		profes.insertar(maest.cedula,maest);
+		maest.nombresClases = nombres;
 		
+		profes.insertar(maest.cedula,maest);
 	}
 	
 	archivo.close();
-	
+
 	return profes;
 }
 Director Archivo::leerArchivoDirector(string ruta){
