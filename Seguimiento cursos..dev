@@ -104,27 +104,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit7]
-FileName=CortesNotas.h
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit8]
-FileName=Trio.h
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit9]
 FileName=Estudiante.h
 CompileCpp=1
 Folder=
@@ -134,7 +114,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit10]
+[Unit9]
 FileName=arbolB.h
 CompileCpp=1
 Folder=
@@ -144,21 +124,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit13]
-FileName=clase.h
-=======
-FileName=Lector.h
->>>>>>> 6d9bb931fd60be739610063b521a6842e5f3ad4e
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit14]
-FileName=promedio.h
+[Unit10]
+FileName=Archivos.h
 CompileCpp=1
 Folder=
 Compile=1
@@ -178,7 +145,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit11]
-FileName=Archivos.h
+FileName=clase.h
 CompileCpp=1
 Folder=
 Compile=1
@@ -188,7 +155,37 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit12]
-FileName=clase.h
+FileName=Lector.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit7]
+FileName=Trio.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit13]
+FileName=..\..\..\..\..\..\Documents\Pruebas\CortesNotas.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit14]
+FileName=promedio.h
 CompileCpp=1
 Folder=
 Compile=1

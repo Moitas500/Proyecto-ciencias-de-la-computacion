@@ -1,0 +1,1 @@
+punto: 1 nota: 2.83333 punto: 2 nota: 3.43333 punto: 3 nota: 4.43333 

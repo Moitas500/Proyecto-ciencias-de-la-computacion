@@ -9,6 +9,7 @@ class Estudiante : public Persona{
 	private:
 		string apellido;
 		listaD<float> notas;
+		float promedio;
 	//Metodos
 	public:
 		Estudiante();
@@ -17,6 +18,8 @@ class Estudiante : public Persona{
 		listaD<float> getNotas();
 		void setApeliidos(string _apellido);
 		void setNotas(listaD<float> _notas);
+		void setPromedio(float promedio);
+		float getPromedio();
 };
 Estudiante::Estudiante() : Persona(){
 }
@@ -39,5 +42,11 @@ void Estudiante::setApeliidos(string _apellido){
 //Metodo para setear las notas del estudiante
 void Estudiante::setNotas(listaD<float> _notas){
 	this->notas = _notas;
+}
+void Estudiante:: setPromedio(float promedio){
+	this->promedio=promedio;
+}
+float Estudiante:: getPromedio(){
+	return this->promedio;
 }
 #endif

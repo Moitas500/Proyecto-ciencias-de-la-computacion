@@ -824,9 +824,9 @@ void menu_estudiantes(){
 	//Titulo del menu
 	const char *titulo = "MENU ESTUDIANTES";
 	//Opciones del menu
-	const char *opciones[] = {"Consultar promedio de un estudiante","Salir"};
+	const char *opciones[] = {"Consultar promedio de un estudiante","Generar archivos parcial","Consultar promedio por curso","Salir"};
 	//Numero de opciones
-	int n = 2;
+	int n = 4;
 	
 	do{
 		opcion = menu(titulo, opciones, n);
@@ -864,7 +864,42 @@ void menu_estudiantes(){
 				break;
 			}
 				
-			case 2:
+			case 2:{
+				system("cls");
+				promedio p;
+				int cedula;
+				string clase;
+				cout<<"Ingrese la cedula del profesor"<<endl;
+				cin>>cedula;
+				cout<<"Ingrse el nombre de la clase"<<endl;
+				cin>>clase;
+				p.escribirParcialPromedios(cedula,clase);
+				cout<<"Se generaron correctamente en la carpeta Parciales/"<<clase<<endl;
+				system("pause");
+				break;
+			}
+			case 3:{
+				system("cls");
+				string nombreCurso;
+				int cedula;
+				cout << "Digite el nombre del curso: ";
+				cin >> nombreCurso;
+				cout << endl;
+				cout << "Digite la cedula del profesor: ";
+				cin >> cedula;
+				
+				promedio pr;
+				float ps = pr.promedioCurso(nombreCurso,cedula);
+				
+				system("cls");
+				
+				cout << "El promedio del curso " << nombreCurso << " es " << ps << endl;
+				
+				system("pause");
+				break;
+			}		
+				
+			case 4:
 				repite = false;
 				break; 	 		
 		}
